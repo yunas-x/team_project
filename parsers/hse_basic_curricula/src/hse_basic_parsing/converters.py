@@ -14,3 +14,17 @@ def convert_pdf_to_data_frame(pdf_file_name):
                 df.loc[len(df)] = row
 
     return df
+
+
+def get_pdf_text(pdf_file_name):
+    with pdfplumber.open(pdf_file_name) as pdf:
+        page_text_list = [page.extract_text(x_tolerance=1) for page in pdf.pages]
+
+    return "\n".join(page_text_list)
+
+
+def get_pdf_page_text(pdf_file_name, page_index):
+    with pdfplumber.open(pdf_file_name) as pdf:
+        page_text = pdf.pages[page_index].extract_text(x_tolerance=1)
+
+    return page_text

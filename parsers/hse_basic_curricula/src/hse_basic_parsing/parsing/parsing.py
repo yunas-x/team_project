@@ -1,33 +1,34 @@
-import pandas as pd
 import re
-from info_holder import InfoHolder
-
+from .header_parsing import parse_header
+from .header_info import HeaderInfo
 
 COMPULSORY_TYPE = "О"
 ELECTIVE_TYPE = "В"
 
-info_holder = InfoHolder()
+info_holder = HeaderInfo()
 
 
-def parse(data_frame):
-    info_holder.speciality_code = get_speciality_code(data_frame)
+def parse(header_text_list, data_frame):
+    parse_header(header_text_list, info_holder)
 
-    info_holder.speciality_name = get_speciality_name(data_frame)
+    #info_holder.speciality_code = _get_speciality_code(data_frame)
 
-    info_holder.programme_name = get_programme_name(data_frame)
+    #info_holder.speciality_name = get_speciality_name(data_frame)
 
-    info_holder.faculty = get_faculty(data_frame)
+    #info_holder.programme_name = get_programme_name(data_frame)
 
-    info_holder.enrollment_year = get_enrollment_year(data_frame)
+    #info_holder.faculty = get_faculty(data_frame)
 
-    info_holder.study_year_count = get_study_year_count(data_frame)
+    #info_holder.enrollment_year = get_enrollment_year(data_frame)
 
-    info_holder.degree = get_degree(data_frame)
+    #info_holder.study_year_count = get_study_year_count(data_frame)
 
-    info_holder.print()
+    #info_holder.degree = get_degree(data_frame)
+
+    print(info_holder, sep=" ")
 
 
-def get_speciality_code(df):
+def _get_speciality_code(df):
     speciality_row = df.iloc[0, 0]
     code_matching = re.search(r"\b(?:\d{2}.){2}\d{2}\b", speciality_row)
 

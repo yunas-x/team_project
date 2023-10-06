@@ -1,13 +1,13 @@
 from converters import convert_pdf_to_data_frame, get_pdf_page_text
-from parsing.parsing import parse
+from parsing.parsing import parse_all
 
 
 def parse_hse_basic_curricula(files_path):
-    df = convert_pdf_to_data_frame(files_path.joinpath("2.pdf"))
+    file_name = "2.pdf"
+    full_path = files_path.joinpath(file_name)
 
-    header_text_list = get_pdf_page_text(files_path.joinpath("2.pdf"), 0).split("\n")
+    header_text_list = get_pdf_page_text(full_path, 0).split("\n")
     header_text_list = [text for text in header_text_list if text]
 
-    parse(header_text_list, df)
-    #print(get_pdf_page_text(files_path.joinpath("2.pdf"), 0))
-    # print(df.iloc[5, :])
+    df = convert_pdf_to_data_frame(full_path)
+    parse_all(header_text_list, df)

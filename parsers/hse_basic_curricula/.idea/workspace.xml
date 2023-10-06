@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061af3a8-40e7-4c51-b31a-643a160be41f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_info.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/converters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/converters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parsing/info_holder.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parsing/parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/parsing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/converters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/converters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_parsing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/regex_helpers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/parsing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,8 +106,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_parsing.py</url>
-          <line>5</line>
-          <option name="timeStamp" value="6" />
+          <line>22</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

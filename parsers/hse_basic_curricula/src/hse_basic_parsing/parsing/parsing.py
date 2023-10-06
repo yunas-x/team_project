@@ -1,82 +1,15 @@
-import re
 from .header_parsing import parse_header
 from .header_info import HeaderInfo
 
 COMPULSORY_TYPE = "О"
 ELECTIVE_TYPE = "В"
 
-info_holder = HeaderInfo()
 
+def parse_all(header_text_list, data_frame):
+    header_info = HeaderInfo()
+    parse_header(header_text_list, header_info)
 
-def parse(header_text_list, data_frame):
-    parse_header(header_text_list, info_holder)
-
-    #info_holder.speciality_code = _get_speciality_code(data_frame)
-
-    #info_holder.speciality_name = get_speciality_name(data_frame)
-
-    #info_holder.programme_name = get_programme_name(data_frame)
-
-    #info_holder.faculty = get_faculty(data_frame)
-
-    #info_holder.enrollment_year = get_enrollment_year(data_frame)
-
-    #info_holder.study_year_count = get_study_year_count(data_frame)
-
-    #info_holder.degree = get_degree(data_frame)
-
-    print(info_holder, sep=" ")
-
-
-def _get_speciality_code(df):
-    speciality_row = df.iloc[0, 0]
-    code_matching = re.search(r"\b(?:\d{2}.){2}\d{2}\b", speciality_row)
-
-    return code_matching[0]
-
-
-def get_speciality_name(df):
-    speciality_row = df.iloc[0, 0]
-    name_matching = find_word_in_quotes(speciality_row)
-
-    return name_matching[0].replace("\"", "")
-
-
-def find_word_in_quotes(row):
-    return re.search(r"\"(?:[\da-zА-я\-]+[^\S\f\t\r\n]?)+\"", row)
-
-
-def get_programme_name(df):
-    programme_row = df.iloc[1, 0]
-    programme_matching = find_word_in_quotes(programme_row)
-
-    return programme_matching[0].replace("\"", "")
-
-
-def get_faculty(df):
-    faculty_row = df.iloc[2, 0]
-
-    return faculty_row.replace("Реализующее подразделение: ", "")
-
-
-def get_enrollment_year(df):
-    enrollment_row = df.iloc[3, 0]
-    year_matching = re.search(r"\d{4}/", enrollment_row)
-
-    return year_matching[0].replace("/", "")
-
-
-def get_study_year_count(df):
-    study_years_row = df.iloc[4, 0]
-    years_matching = re.search(r"\d{1,2}", study_years_row)
-
-    return years_matching[0]
-
-
-def get_degree(df):
-    degree_row = df.iloc[6, 0]
-
-    return degree_row.replace("Уровень образования: ", "")
+    print(header_info, sep=" ")
 
 
 def read_table_rows(df):
@@ -90,7 +23,7 @@ def read_table_rows(df):
             continue
 
         if row[1].contains("Специализация"):
-            specialization = find_word_in_quotes(row[1])
+            # specialization = find_word_in_quotes(row[1])
 
             continue
         else:

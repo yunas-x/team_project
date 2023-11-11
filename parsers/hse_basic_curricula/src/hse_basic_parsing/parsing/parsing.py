@@ -1,18 +1,19 @@
 from .header_parsing import parse_header
 from .header_info import HeaderInfo
-
-COMPULSORY_TYPE = "О"
-ELECTIVE_TYPE = "В"
+from .course_types import CourseType
 
 
 def parse_all(header_text_list, data_frame):
     header_info = HeaderInfo()
     parse_header(header_text_list, header_info)
 
-    print(header_info, sep=" ")
+    print(header_info)
+
+    #print(data_frame.iloc[0, :])
+    #__parse_body(data_frame)
 
 
-def read_table_rows(df):
+def __parse_body(df):
     specialization = ""
     course_type = ""
 
@@ -30,11 +31,11 @@ def read_table_rows(df):
             specialization = ""
 
         if row[1].contains("Блок дисциплин по выбору"):
-            course_type = ELECTIVE_TYPE
+            course_type = CourseType.ELECTIVE_TYPE
 
             continue
         else:
-            course_type = COMPULSORY_TYPE
+            course_type = CourseType.COMPULSORY_TYPE
 
         if row[0] is not None:
             #course_name = row[]

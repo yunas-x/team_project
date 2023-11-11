@@ -3,11 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="061af3a8-40e7-4c51-b31a-643a160be41f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/__main__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/common.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/converters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/converters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_info.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_parsing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/regex_helpers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/parsing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,8 +41,8 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/shisha/Desktop/TeamProject/team_project/parsers/hse_basic_curricula/main.py&quot;,
-    &quot;two.files.diff.last.used.file&quot;: &quot;C:/Users/shisha/Desktop/TeamProject/team_project/parsers/hse_basic_curricula/main.py&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/shisha/Desktop/TeamProject/team_project/parsers/hse_basic_curricula/src/hse_basic_parsing/parsing/header_info.py&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;C:/Users/shisha/Desktop/TeamProject/team_project/parsers/hse_basic_curricula/src/hse_basic_parsing/parsing/header_info.py&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -100,16 +101,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_parsing.py</url>
-          <line>22</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

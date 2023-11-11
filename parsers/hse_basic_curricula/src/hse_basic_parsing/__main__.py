@@ -2,7 +2,7 @@ from pathlib import Path
 from common import parse_hse_basic_curricula
 
 
-base_dir_path = Path(__file__).resolve().parent.parent.parent.parent.parent
+base_dir_path = Path(__file__).resolve().parents[4]
 default_files_path = base_dir_path.joinpath("curricula_examples").joinpath("basic")
 
 

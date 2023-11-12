@@ -6,7 +6,7 @@ def convert_pdf_to_data_frame(pdf_file_name) -> pd.DataFrame:
     """Extracts all the tables from pdf file and places them into one DataFrame"""
 
     with pdfplumber.open(pdf_file_name) as pdf:
-        column_count = len(pdf.pages[0].extract_table(table_settings={"text_settings": {"x_tolerance": 1}})[1])
+        column_count = len(pdf.pages[0].extract_table()[1])
         df = pd.DataFrame(columns=[i for i in range(0, column_count)])
 
         for i, page in enumerate(pdf.pages):

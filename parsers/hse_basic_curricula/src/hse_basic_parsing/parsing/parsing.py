@@ -1,43 +1,59 @@
+import pandas as pd
+from pandas import DataFrame
+from .body_parsing import parse_body
+from .data_classes.body_info import BodyInfo
 from .header_parsing import parse_header
-from .header_info import HeaderInfo
-from .course_types import CourseType
+from src.hse_basic_parsing.parsing.data_classes.header_info import HeaderInfo
 
 
-def parse_all(header_text_list, data_frame):
+def parse_all(header_text_list, data_frame) -> DataFrame:
     header_info = HeaderInfo()
     parse_header(header_text_list, header_info)
 
-    print(header_info)
+    #print(header_info)
 
-    #print(data_frame.iloc[0, :])
-    #__parse_body(data_frame)
+    body_info = BodyInfo()
+
+    body_info_list = parse_body(data_frame)
+    print(body_info_list)
+
+    result_df = merge_info(header_info, body_info_list)
+
+    return result_df
 
 
-def __parse_body(df):
-    specialization = ""
-    course_type = ""
+def merge_info(header_info, body_info_list) -> DataFrame:
+    result_df = pd.DataFrame(columns=["CourseName", "CompetenceCode", "Speciality", "SpecialityCode", "Programme",
+                                      "CourseType", "Specialization", "Credits", "Year", "Faculty", "EnrolledIn",
+                                      "Degree"])
 
-    for index in range(10, len(df)):
-        row = df.iloc[index, :]
+    for code_index, code_name in enumerate(header_info.speciality_codes):
+        for body_info in body_info_list:
+            if len(body_info.competence_codes) == 0:
+                result_row = create_row(header_info, body_info, code_name, header_info.speciality_names[code_index])
 
-        if row[0] is None and not row[1].contains("Специализация"):
-            continue
+                result_df.loc[len(result_df.index)] = result_row
+            else:
+                for competence_code in body_info.competence_codes:
+                    result_row = create_row(header_info, body_info, code_name, header_info.speciality_names[code_index])
 
-        if row[1].contains("Специализация"):
-            # specialization = find_word_in_quotes(row[1])
+                    result_df.loc[len(result_df.index)] = result_row
 
-            continue
-        else:
-            specialization = ""
+    return result_df
 
-        if row[1].contains("Блок дисциплин по выбору"):
-            course_type = CourseType.ELECTIVE_TYPE
 
-            continue
-        else:
-            course_type = CourseType.COMPULSORY_TYPE
-
-        if row[0] is not None:
-            #course_name = row[]
-
-            new_df_row = []
+def create_row(header_info, body_info, code_name, speciality_name):
+    return [
+        body_info.course_name,
+        "",
+        speciality_name,
+        code_name,
+        header_info.programme_name,
+        body_info.course_type.value,
+        body_info.specialization,
+        body_info.credits,
+        header_info.study_year_count,
+        header_info.faculty,
+        header_info.enrollment_year,
+        header_info.degree
+    ]

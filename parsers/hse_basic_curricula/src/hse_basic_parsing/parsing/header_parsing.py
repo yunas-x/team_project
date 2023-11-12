@@ -1,3 +1,4 @@
+from src.hse_basic_parsing.parsing.data_classes.header_info import HeaderInfo
 from .regex_helpers import get_words_in_quotes, get_speciality_code_list, remove_initials_from_text,\
     get_speciality_list, find_first_match
 from .list_helpers import find_first_index
@@ -17,7 +18,7 @@ class Pointer:
         self.__pointer += value
 
 
-def parse_header(header_text_list, header_info):
+def parse_header(header_text_list, header_info: HeaderInfo):
     """Parses data from a list of texts and places it into HeaderInfo"""
 
     pointer = Pointer()

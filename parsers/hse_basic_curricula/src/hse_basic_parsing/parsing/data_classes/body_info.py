@@ -3,7 +3,7 @@ from src.hse_basic_parsing.parsing.data_classes.course_types import CourseType
 
 
 @dataclass
-class BodyInfo:
+class BodyRowInfo:
     course_name: str = ""
     course_type: CourseType = CourseType.COMPULSORY_TYPE
     specialization: str = ""

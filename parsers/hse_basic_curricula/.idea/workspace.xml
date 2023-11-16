@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="061af3a8-40e7-4c51-b31a-643a160be41f" name="Changes" comment="Refactoring header_parsing.py">
+    <list default="true" id="061af3a8-40e7-4c51-b31a-643a160be41f" name="Changes" comment="First steps of full document parsing">
+      <change beforePath="$PROJECT_DIR$/../../curricula_examples/basic/2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../curricula_examples/basic/5.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/converters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/converters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/course_types.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/data_classes/course_types.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/data_classes/header_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/header_parsing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/list_helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/list_helpers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/body_parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/body_parsing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/data_classes/body_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/data_classes/body_info.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/parsing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/savers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/savers.py" afterDir="false" />
     </list>
@@ -99,7 +97,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699728719846</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="First steps of full document parsing">
+      <created>1699813756131</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699813756131</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -115,6 +120,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactoring header_parsing.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring header_parsing.py" />
+    <MESSAGE value="First steps of full document parsing" />
+    <option name="LAST_COMMIT_MESSAGE" value="First steps of full document parsing" />
   </component>
 </project>

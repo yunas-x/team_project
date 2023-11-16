@@ -8,7 +8,7 @@ from src.hse_basic_parsing.parsing.savers import save_df_to_excel
 
 
 def parse_hse_basic_curricula(files_path):
-    file_name = "3.pdf"
+    file_name = "1.pdf"
     full_path = files_path.joinpath(file_name)
 
     header_text_list = get_pdf_page_text(full_path, 0).split("\n")
@@ -17,7 +17,6 @@ def parse_hse_basic_curricula(files_path):
     df = get_data_frame_by_pdf_path(full_path)
     df = prepare_table(df)
 
-    #print(df)#.iloc[:, 6:16])
     result_df = parse_all(header_text_list, df)
 
     save_df_to_excel(result_df, files_path.joinpath("sdf.xlsx"))

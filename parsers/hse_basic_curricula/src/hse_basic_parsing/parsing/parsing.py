@@ -2,7 +2,7 @@ import pandas as pd
 from pandas import DataFrame
 from .body_parsing import parse_body
 from .header_parsing import parse_header
-from src.hse_basic_parsing.parsing.data_classes.header_info import HeaderInfo
+from .data_classes.header_info import HeaderInfo
 
 
 def parse_all(header_text_list, data_frame) -> DataFrame:

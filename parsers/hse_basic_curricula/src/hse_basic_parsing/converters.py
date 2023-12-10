@@ -10,29 +10,30 @@ def convert_pdf_to_data_frame(pdf_file_name) -> pd.DataFrame:
         df = pd.DataFrame(columns=[i for i in range(0, column_count)])
 
         for i, page in enumerate(pdf.pages):
-            table = page.extract_table()
-
-            for row in table:
-                df.loc[len(df)] = row
+            table = page.extract_table(table_settings = {"text_x_tolerance": 1})
+            
+            if table:
+                for row in table:
+                    df.loc[len(df)] = row
 
     return df
 
 
-def get_pdf_text(pdf_file_name) -> str:
-    """Collects all the text from pdf file"""
+# def get_pdf_text(pdf_file_name) -> str:
+#     """Collects all the text from pdf file"""
 
-    with pdfplumber.open(pdf_file_name) as pdf:
-        page_text_list = [__get_page_text(page) for page in pdf.pages]
+#     with pdfplumber.open(pdf_file_name) as pdf:
+#         page_text_list = [__get_page_text(page) for page in pdf.pages]
 
-    return "\n".join(page_text_list)
+#     return "\n".join(page_text_list)
 
 
-def get_pdf_page_text(pdf_file_name, page_index) -> str:
+def get_pdf_page_text(pdf_file_name, page_index, layout = False, x_density = 7.25) -> str:
     """Collects all the text from a page of pdf file"""
 
     with pdfplumber.open(pdf_file_name) as pdf:
-        return __get_page_text(pdf.pages[page_index])
+        return __get_page_text(pdf.pages[page_index], layout, x_density)
 
 
-def __get_page_text(page):
-    return page.extract_text(x_tolerance=1)
+def __get_page_text(page, layout = False, x_density = 1):
+    return page.extract_text(x_tolerance=1, layout=layout, x_density=x_density)

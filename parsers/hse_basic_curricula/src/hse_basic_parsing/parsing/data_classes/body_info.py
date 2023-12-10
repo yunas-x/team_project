@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from src.hse_basic_parsing.parsing.data_classes.course_types import CourseType
+from .course_types import CourseType
 
 
 @dataclass

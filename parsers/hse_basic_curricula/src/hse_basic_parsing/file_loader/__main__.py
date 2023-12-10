@@ -4,7 +4,6 @@ from loader import load
 from plan_types import PlanType
 
 
-
 def get_args() -> Namespace:
     argparser = ArgumentParser(prog = 'file_loader')
     
@@ -14,7 +13,6 @@ def get_args() -> Namespace:
     argparser.add_argument('--headless', default=False, action='store_true')
     
     return argparser.parse_args()
-
 
 
 if __name__ == '__main__':

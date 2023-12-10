@@ -1,8 +1,8 @@
 import re
 from typing import Any
-from src.hse_basic_parsing.parsing.data_classes.body_info import BodyRowInfo
-from src.hse_basic_parsing.parsing.data_classes.course_types import CourseType
-from src.hse_basic_parsing.parsing.list_helpers import find_first_index
+from .data_classes.body_info import BodyRowInfo
+from .data_classes.course_types import CourseType
+from .list_helpers import find_first_index
 
 
 def parse_body(document_df) -> list[BodyRowInfo]:

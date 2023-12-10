@@ -11,7 +11,6 @@ import time
 from plan_types import PlanType
 
 
-
 def load(plan_type: PlanType, path: str, headless: bool):
     match plan_type:
         case PlanType.HSE_BASIC_PLAN:
@@ -19,7 +18,6 @@ def load(plan_type: PlanType, path: str, headless: bool):
     
         case PlanType.HSE_PLAN:
             _load_hse('https://asav.hse.ru/plans.html?login=web&password=web', 'showWorkFaculty', path, headless)
-
 
 
 # The only thing different between plans and basic plans is that hyperlinks call different js functions so :hyp_signature contains functions's name
@@ -59,7 +57,6 @@ def _load_hse(url, hyp_signature, path: str, headless: bool = False):
         print("Download finished!")
     except TimeoutException:
         print("Loading took too much time!")
-
 
 
 def _setup_chrome_driver(path: str, headless: bool = False) -> WebDriver:

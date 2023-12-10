@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061af3a8-40e7-4c51-b31a-643a160be41f" name="Changes" comment="First steps of full document parsing">
-      <change beforePath="$PROJECT_DIR$/../../curricula_examples/basic/2.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../curricula_examples/basic/5.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/common.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/body_parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/body_parsing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/data_classes/body_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/data_classes/body_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/parsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/parsing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/savers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hse_basic_parsing/parsing/savers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +23,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
   <component name="ProjectId" id="2W6kLfiLjZRNADOZ5uc2cWKsuU1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -37,14 +34,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/shisha/Desktop/TeamProject/team_project/parsers/hse_basic_curricula/src/hse_basic_parsing/parsing/header_info.py&quot;,
-    &quot;two.files.diff.last.used.file&quot;: &quot;C:/Users/shisha/Desktop/TeamProject/team_project/parsers/hse_basic_curricula/src/hse_basic_parsing/parsing/header_info.py&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "hse__parsing",
+    "last_opened_file_path": "C:/Users/shisha/Desktop/TeamProject/team_project/parsers/hse_basic_curricula/src/hse_basic_parsing/parsing/header_info.py",
+    "two.files.diff.last.used.file": "C:/Users/shisha/Desktop/TeamProject/team_project/parsers/hse_basic_curricula/src/hse_basic_parsing/parsing/header_info.py",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\shisha\Desktop\TeamProject\team_project\parsers\hse_basic_curricula\src\hse_basic_parsing\parsing\data_classes" />
@@ -66,6 +66,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/hse_basic_parsing/__main__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -89,6 +90,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1696060363653</updated>
+      <workItem from="1702128158476" duration="13000" />
     </task>
     <task id="LOCAL-00001" summary="Refactoring header_parsing.py">
       <created>1699728719846</created>

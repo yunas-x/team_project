@@ -7,13 +7,8 @@ import pandas as pd
 
 
 def parse(text_list, table) -> pd.DataFrame:
-    # Header
     programme = _get_programme_name(text_list)
     year, enrolled_in = _get_year_and_enrolled_in(text_list)
-    
-    print(programme)
-    print(year)
-    print(enrolled_in)
 
     result_table = []
     table = table.dropna(subset=['podr'])

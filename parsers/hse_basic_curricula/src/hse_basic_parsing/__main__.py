@@ -21,5 +21,11 @@ def get_args() -> Namespace:
 
 if __name__ == '__main__':
     args = get_args()
+    mode = PlanType(args.mode)
     
-    common.parse_hse_curricula(Path(args.src), Path(args.dest))
+    match mode:
+        case PlanType.HSE_BASIC_PLAN:
+            common.parse_hse_basic_curricula(Path(args.src), Path(args.dest))
+    
+        case PlanType.HSE_PLAN:
+            common.parse_hse_curricula(Path(args.src), Path(args.dest))

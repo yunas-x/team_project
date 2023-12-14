@@ -12,10 +12,10 @@ def get_corrected_df(df: DataFrame) -> DataFrame:
     df = df.iloc[2:, :]
     df[['hours_mod1', 'hours_mod2', 'hours_mod3', 'hours_mod4']] =\
         df[['hours_mod1', 'hours_mod2', 'hours_mod3', 'hours_mod4']].fillna(0)
-        
-    # If № is not a number, replace with None
+
     df['n_row'] = df['n_row'].apply(lambda x: x if bool(re.search(r'\d+', str(x))) else None)
-    df = df.dropna(subset=['n_row'])
+    df['dscpl'] = df['dscpl'].apply(lambda x: None if bool(re.search(r'Блок \d+', str(x))) else x)
+    df = df.dropna(subset=['n_row', 'dscpl'])
     return df
         
         
@@ -33,7 +33,7 @@ def _remove_redundant_columns(df: DataFrame) -> DataFrame:
             used_column_names.append(col_name)
             
     return df.loc[:,used_column_names]
-            
+        
 
 
 def _determine_if_column_is_used(header_name: str) -> bool:

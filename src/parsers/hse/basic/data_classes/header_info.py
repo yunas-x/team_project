@@ -7,7 +7,7 @@ class HeaderInfo:
     speciality_names: list[str] = field(default_factory=list)
     programme_name: str = ""
     faculty: str = ""
-    enrollment_year: str = ""
+    enrollment_year: int = ""
     study_year_count: str = ""
     degree: str = ""
 

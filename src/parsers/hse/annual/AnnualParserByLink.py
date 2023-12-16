@@ -25,6 +25,7 @@ class AnnualParserByLink(ParserProtocol):
         pdf_file_full_path = temp_file_service.create_file(pdf_file_name, content)
 
         parser = AnnualParser()
+
         try:
             result = parser.parse(pdf_file_full_path)
         finally:

@@ -1,0 +1,100 @@
+{
+  "type": "object",
+  "required": ["ProgramInfo"],
+  "properties": {
+    "ProgramInfo": {
+      "type": "object",
+      "properties": {
+        "name": { 
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 150,
+          "examples": [
+              "Программная инженерия",
+              "Прикладной анализ данных",
+              "Право"
+          ]
+        },
+        "yearEnrolled": { 
+          "type": "integer",
+          "minimum": 2000,
+          "maximum": 2050,
+          "examples": [
+              2020,
+              2022,
+              2018
+          ]
+        },
+        "courses": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/course"
+          }
+        }
+      },
+      "required": ["name", "yearEnrolled", "courses"]
+    }
+  },
+  "$defs": {
+    "course": { 
+      "type": "object",
+      "required": ["name", "type", "credits", "classroomHours", "year", "competences"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 150,
+          "examples": [
+              "Правовая граммотность",
+              "Экономика для гумманитариев",
+              "Высшая математика"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 50,
+          "enum": [
+              "Обязательный", 
+              "Факультативный", 
+              "По выбору"
+          ]
+        },
+        "credits": {
+          "type": "integer",
+          "minimum": 1,
+          "exclusiveMaximum": 60
+        },
+        "classroomHours": {
+          "type": "integer",
+          "minimum": 1,
+          "exclusiveMaximum": 1000
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1,
+          "exclusiveMaximum": 6
+        },
+        "comments": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "type": "string"
+          }
+        },
+        "readBy": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 50,
+          "enum": [
+              "Департмент программной инженерии", 
+              "Кафедра ИТБ", 
+              "Кафедра гражданского права"
+          ]
+        }
+      }
+    }
+  }
+}

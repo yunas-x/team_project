@@ -28,14 +28,14 @@ def get_words_in_quotes(text) -> str | None:
     For example, for the text "Lorem ipsum "maybe" lorem" Match with "maybe" will be returned.
     """
 
-    return find_first_match(r"\"(?:[\dA-zА-я-:,;]+[^\S\f\t\r\n]?)+\"", text)
+    return find_first_match(r"\"(?:[\dA-zА-я\-\.:,;()'ёЁ]+[^\S\f\t\r\n]?)+\"", text)
 
 
 def remove_initials_from_text(text) -> str:
     # noinspection SpellCheckingInspection
     """Removes an entry like "С. В. Рощин" from text"""
 
-    return re.sub(r"\b[А-Я].\s?[А-Я].\s+[А-я-]+\b", "", text)
+    return re.sub(r"\b[А-Я]\.\s?[А-Я]\.\s+[А-я-]+\b", "", text)
 
 
 def find_first_match(pattern, text) -> str | None:

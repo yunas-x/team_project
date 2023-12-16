@@ -21,10 +21,10 @@ class AnnualParser(ParserProtocol):
         header_text_list = get_pdf_page_text(pdf_path, 0, True).split("\n")
         header_text_list = [text.strip() for text in header_text_list if text]
         
-        df = get_data_frame_by_pdf_path(pdf_path, table_settings={"text_x_tolerance": 1, "vertical_strategy": "lines_strict"})
+        df = get_data_frame_by_pdf_path(pdf_path,
+                                        table_settings={"text_x_tolerance": 1, "vertical_strategy": "lines_strict"})
         df = prepare_table(df)
         df = get_corrected_df(df)
-        
 
         programme = get_programme_name(header_text_list)
         year, enrolled_in = get_year_and_enrolled_in(header_text_list)

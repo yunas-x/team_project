@@ -10,11 +10,12 @@ def parse_body(document_df) -> list[BodyRowInfo]:
 
     has_course_type_column = find_first_index(first_row, "Вид") is not None
     credits_col_index = find_first_index(first_row, "Трудоемкость")
+    last_col_index = len(document_df.columns) - 1
 
     body_info_list = []
 
     specialization = ""
-    previous_course_type = None
+    previous_course_type = CourseType.ELECTIVE_TYPE
 
     # row_number initially equals to 1
     for row_index, row in document_df.iterrows():
@@ -40,13 +41,15 @@ def parse_body(document_df) -> list[BodyRowInfo]:
             previous_course_type = define_course_type(document_df, row_index, previous_course_type)
             body_info.course_type = previous_course_type
 
-        body_info.credits = row_values[credits_col_index]
+        credits_list, years = __get_credits_and_years(row_values, credits_col_index, last_col_index)
+        body_info.credits.extend(credits_list)
+        body_info.course_years.extend(years)
 
-        last_value = row_values[len(row_values) - 1]
+        last_value = row_values[last_col_index]
 
         # value might be undefined
         if isinstance(last_value, str):
-            body_info.competence_codes = last_value.split(", ")
+            body_info.competence_codes = [code.strip() for code in last_value.split(",")]
 
         body_info_list.append(body_info)
 
@@ -126,6 +129,9 @@ def define_course_type(document_df, row_index, previous_course_type) -> CourseTy
 
     block_header_name = find_block_header_name(document_df, row_index)
 
+    if block_header_name is None:
+        return CourseType.COMPULSORY_TYPE
+
     # noinspection SpellCheckingInspection
     header_names = [
         r"Дисц(?:[A-zА-я\" ])*?специализации ",
@@ -182,3 +188,18 @@ def find_block_header_name(document_df, cur_row_index):
 
 def get_df_row(df, row_index) -> list[Any]:
     return df.iloc[row_index, :]
+
+
+def __get_credits_and_years(cur_row_values, credits_col_index, last_col_index):
+    credits_list = []
+    years = []
+
+    for col_index in range(credits_col_index + 1, last_col_index):
+        credits_value = cur_row_values[col_index]
+
+        credits_match = re.search(r"\d+", str(credits_value))
+        if credits_match is not None:
+            credits_list.append(int(credits_match.group(0)))
+            years.append(col_index - credits_col_index)
+
+    return credits_list, years

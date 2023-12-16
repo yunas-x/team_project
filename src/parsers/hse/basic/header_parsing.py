@@ -1,3 +1,5 @@
+import re
+
 from .data_classes.header_info import HeaderInfo
 from ...core.utils.list_helpers import find_first_index
 from ...core.utils.regex_helpers import get_speciality_code_list, get_speciality_list, remove_initials_from_text, \
@@ -25,6 +27,9 @@ def parse_header(header_text_list, header_info: HeaderInfo):
 
     # to skip first unnecessary rows, start with the row that contains the word "Направление"
     start_index = find_first_index(header_text_list, "Направление ")
+    if start_index is None:
+        start_index = find_first_index(header_text_list, "Специальность ")
+
     pointer.increase_pointer(start_index)
 
     header_info.speciality_codes = get_speciality_codes(header_text_list, start_index)
@@ -97,7 +102,7 @@ def get_speciality_name_list(entry_list, pointer: Pointer):
 
 
 def get_clear_speciality_name(raw_speciality_name):
-    return raw_speciality_name.replace("___________", "").strip(" \"")
+    return raw_speciality_name.replace("___________", "").replace("Проректор", "").strip(" \"")
 
 
 def increase_pointer_for_programme_row(header_text_list, pointer: Pointer):
@@ -110,11 +115,26 @@ def increase_pointer_for_programme_row(header_text_list, pointer: Pointer):
 
 def get_programme_name(entry_list, pointer: Pointer):
     programme_row = entry_list[pointer.pointer]
+    programme_row = remove_initials_from_text(programme_row.strip().replace(" ___________", ""))
+    programme_row = __replace_inner_brackets(programme_row.strip())
+
     programme = get_words_in_quotes(programme_row)
 
     pointer.increase_pointer()
 
     return programme.strip("\"")
+
+
+def __replace_inner_brackets(string: str) -> str:
+    new_string = string
+
+    for i, bracket in enumerate(re.finditer("\"", string)):
+        if i == 0 or bracket.start() == len(string) - 1:
+            continue
+
+        new_string = new_string[:bracket.start()] + "'" + new_string[bracket.start() + 1:]
+
+    return new_string
 
 
 def increase_pointer_for_faculty(header_text_list, pointer: Pointer):
@@ -131,7 +151,7 @@ def get_faculty(entry_list, pointer: Pointer):
     return faculty_row.replace("Реализующее подразделение: ", "")
 
 
-def get_enrollment_year(entry_list, pointer: Pointer):
+def get_enrollment_year(entry_list, pointer: Pointer) -> int:
     """
     Finds the enrollment year in the text.
     For a row "Годы обучения: 2022/2023 учебный год - 2025/2026 учебный год" 2022 will be returned.
@@ -142,7 +162,7 @@ def get_enrollment_year(entry_list, pointer: Pointer):
 
     pointer.increase_pointer()
 
-    return year.replace("/", "")
+    return int(year.replace("/", ""))
 
 
 def get_study_year_count(entry_list, pointer: Pointer):

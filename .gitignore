@@ -1,3 +1,4 @@
 /src/venv
 /src/.idea
 /file_loader/.idea
+**/__pycache__/

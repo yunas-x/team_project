@@ -4,8 +4,8 @@ from pandas import DataFrame
 from parsers.core.utils.converters import convert_pdf_to_data_frame
 
 
-def get_data_frame_by_pdf_path(full_path):
-    df = convert_pdf_to_data_frame(full_path)
+def get_data_frame_by_pdf_path(full_path: str, table_settings: dict = {}):
+    df = convert_pdf_to_data_frame(full_path, table_settings=table_settings)
     if "Федеральное" in df.iloc[0, 0]:
         df = df.drop([0])
 

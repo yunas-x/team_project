@@ -1,5 +1,4 @@
 from pathlib import Path
-
 from parsers.hse.basic.BasicParser import BasicParser
 from tests.parsers.hse.basic.tests import start_stress_testing
 

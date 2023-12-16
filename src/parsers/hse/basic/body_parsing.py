@@ -49,7 +49,7 @@ def parse_body(document_df) -> list[BodyRowInfo]:
 
         # value might be undefined
         if isinstance(last_value, str):
-            body_info.competence_codes = [code.strip() for code in last_value.split(",")]
+            body_info.competence_codes = [code.strip() for code in last_value.split(",") if code.strip() != ""]
 
         body_info_list.append(body_info)
 

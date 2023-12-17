@@ -1,3 +1,4 @@
+from typing import Optional
 from .BaseModel import BaseModel
 
 from sqlalchemy import ForeignKey
@@ -10,7 +11,7 @@ class FieldOfStudy(BaseModel):
     __tablename__ = "FieldOfStudy"
     
     field_code: Mapped[str] = mapped_column(primary_key=True, index=True, autoincrement=False)
-    field_group_code: Mapped[str] = mapped_column(ForeignKey("FieldOfStudy.field_code"), index=True)
+    field_group_code: Mapped[Optional[str]] = mapped_column(ForeignKey("FieldOfStudy.field_code"), index=True)
     field_name: Mapped[str] = mapped_column(index=True)
     
     children_fields = relationship("FieldOfStudy", back_populates="parent_group")

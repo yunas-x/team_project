@@ -1,4 +1,4 @@
-from loaders.models.BaseModel import BaseModel
+from .BaseModel import BaseModel
 
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column

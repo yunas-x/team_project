@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from loaders.models.BaseModel import BaseModel
+from .BaseModel import BaseModel
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped

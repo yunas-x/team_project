@@ -1,0 +1,21 @@
+.list_holder {
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    background-color: white;
+    min-height: 60px;
+    min-width: 100px;
+    padding: 5px;
+}
+
+.placeholder_block {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: rgba(128, 128, 128, 0.62);
+}
+
+.list_content_block {
+    display: flex;
+    flex-direction: column;
+}

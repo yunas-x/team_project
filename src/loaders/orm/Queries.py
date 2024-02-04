@@ -1,9 +1,9 @@
 from typing import Iterable
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import sessionmaker
+
 from loaders.models.BaseModel import BaseModel
 from loaders.orm.ORMStatus import ORMStatus
-
 
 class Queries:
     """There are DB-queries which are used for CRUD"""

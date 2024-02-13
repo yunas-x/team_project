@@ -1,17 +1,12 @@
 import FieldOfStudyModel from '../../models/fieldOfStudyModel'
 
 export class FieldOfStudyDTO {
-    id;
-    name;
-    universityId
-
-    constructor(id, name, universityId) {
-        this.id = id;
-        this.name = name;
-        this.universityId = universityId;
-    }
+    field_code;
+    field_name;
+    field_group_code;
+    field_group_name;
 }
 
 export function mapFieldOfStudyDTOToModel(dto) {
-    return new FieldOfStudyModel(dto.id, dto.name, dto.universityId);
+    return new FieldOfStudyModel(dto.field_code, dto.field_name, dto.field_group_code, dto.field_group_name);
 }

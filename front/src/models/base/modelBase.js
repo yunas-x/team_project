@@ -1,9 +1,7 @@
 export default class ModelBase {
-    id;
-    name;
-
-    constructor(id, name) {
+    constructor(id, name, displayName = undefined) {
         this.id = id;
         this.name = name;
+        this.displayName = displayName ?? name;
     }
 }

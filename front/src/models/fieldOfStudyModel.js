@@ -1,11 +1,10 @@
 import ModelBase from "./base/modelBase";
 
 export default class FieldOfStudyModel extends ModelBase {
-    universityId;
+    constructor(fieldCode, fieldName, fieldGroupCode, fieldGroupName) {
+        super(fieldCode, fieldName, fieldCode + " " + fieldName);
 
-    constructor(id, name, universityId) {
-        super(id, name);
-
-        this.universityId = universityId;
+        this.fieldGroupCode = fieldGroupCode;
+        this.fieldGroupName = fieldGroupName;
     }
 }

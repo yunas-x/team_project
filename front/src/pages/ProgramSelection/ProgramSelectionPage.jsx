@@ -1,45 +1,35 @@
 import ComboBox from "../../components/ComboBox/ComboBox";
 import ProgramSelectionServicesProvider from "../../store/programSelectionServicesProvider";
-import {useCallback, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
 import {observer} from "mobx-react-lite";
 import styles from './styles.module.css'
 import ProgramSelectionList from "../../components/ProgramSelectionList/ProgramSelectionList";
+import {FilterProgram} from "../../store/dto/filterProgram";
 
 const servicesProvider = new ProgramSelectionServicesProvider();
-servicesProvider.universityService.loadData();
+servicesProvider.loadServices()
 
 const ProgramSelectionPage = observer(() => {
-    const [isFieldOfStudyEditable, setIsFieldOfStudyEditable] = useState(false);
-    const [selectedUniversityId, setSelectedUniversityId] = useState(undefined);
-    const [selectedFieldOfStudyId, setSelectedFieldOfStudyId] = useState(undefined);
+    const [selectedFieldsOfStudyId, setSelectedFieldsOfStudyId] = useState(undefined);
+    const [selectedDegreesId, setSelectedDegreesId] = useState(undefined);
 
-    const [universityService, fieldOfStudyService, programService] =
-        useMemo(() => [servicesProvider.universityService, servicesProvider.fieldOfStudyService, servicesProvider.programService], [])
+    const [universityService, fieldOfStudyService, programService, degreeStore] =
+        [servicesProvider.universityService, servicesProvider.fieldOfStudyService, servicesProvider.programService, servicesProvider.degreeLevelStore];
 
-    const onUniversityChanged = useCallback((selectedId) => {
-        setSelectedUniversityId(selectedId);
+    useEffect(() => {
+        programService.loadFilteredData(createFilterProgramObject(fieldOfStudyService.store, selectedFieldsOfStudyId, selectedDegreesId));
+    }, [programService, fieldOfStudyService.store, selectedFieldsOfStudyId, selectedDegreesId])
 
-        setSelectedFieldOfStudyId(undefined);
-        setIsFieldOfStudyEditable(false);
+    function onFieldsSelectionChanged(selectedIdList) {
+        let selectedFieldsOfStudyId = selectedIdList && selectedIdList.length === 0 ? undefined : selectedIdList;
 
-        if (selectedId) {
-            fieldOfStudyService.loadDataById([selectedId]);
-            setIsFieldOfStudyEditable(true);
+        setSelectedFieldsOfStudyId(selectedFieldsOfStudyId);
+    }
 
-            programService.loadDataById([selectedId]);
-        } else {
-            programService.store.setNewItems([])
-        }
-    }, [fieldOfStudyService, programService])
+    function onDegreesSelectionChanged(selectedIdList) {
+        let selectedDegreesId = selectedIdList && selectedIdList.length === 0 ? undefined : selectedIdList;
 
-    const onFieldOfStudyChanged = (selectedId) => {
-        setSelectedFieldOfStudyId(selectedId)
-
-        if (selectedId) {
-            programService.loadDataById([selectedUniversityId, selectedId]);
-        } else if (selectedUniversityId) {
-            programService.loadDataById([selectedUniversityId]);
-        }
+        setSelectedDegreesId(selectedDegreesId);
     }
 
     return (
@@ -47,22 +37,43 @@ const ProgramSelectionPage = observer(() => {
             <div className={styles.combo_box_holder}>
                 <ComboBox values={universityService.store.items}
                           placeholderText={"Выберите ВУЗ"}
-                          onChange={onUniversityChanged}
                           isEditable={true}
-                          isLoading={universityService.isLoading}/>
+                          isLoading={universityService.isLoading} />
 
                 <ComboBox values={fieldOfStudyService.store.items}
                           placeholderText={"Выберите Направление"}
-                          onChange={onFieldOfStudyChanged}
-                          isEditable={isFieldOfStudyEditable}
+                          onChange={onFieldsSelectionChanged}
+                          isEditable={true}
                           isLoading={fieldOfStudyService.isLoading}
-                          selectedValueId={selectedFieldOfStudyId}/>
+                          selectedValuesId={selectedFieldsOfStudyId}
+                          closeMenuOnSelect={false}
+                          isMulti={true} />
+
+                <ComboBox values={degreeStore.items}
+                          placeholderText={"Выберите Уровень образования"}
+                          onChange={onDegreesSelectionChanged}
+                          isEditable={true}
+                          isLoading={false}
+                          selectedValuesId={selectedDegreesId}
+                          closeMenuOnSelect={false}
+                          isMulti={true} />
+
+                <ComboBox values={programService.store.items}
+                          placeholderText={"Выберите Образовательную программу"}
+                          isEditable={true}
+                          isLoading={programService.isLoading}/>
             </div>
 
-            <ProgramSelectionList isLoading={programService.isLoading}
-                                  programItems={programService.store.items} />
+            {/*<ProgramSelectionList isLoading={programService.isLoading}*/}
+            {/*                      programItems={programService.store.items} />*/}
         </div>
     )
 })
+
+function createFilterProgramObject(fieldsStore, selectedFieldsId, selectedDegreesId) {
+    const fieldGroupsId = selectedFieldsId?.map(fieldId => fieldsStore.items.find(item => item.id === fieldId).fieldGroupCode);
+
+    return new FilterProgram(selectedFieldsId, fieldGroupsId, selectedDegreesId);
+}
 
 export default ProgramSelectionPage;

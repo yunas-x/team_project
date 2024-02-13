@@ -2,27 +2,37 @@ import Select from "react-select";
 import {memo, useEffect, useRef} from "react";
 
 function convertValuesToOptions(values) {
-    return values.map(value => {return {value: value.id, label: value.name}})
+    return values.map(value => {return {value: value.id, label: value.displayName}})
 }
 
 const getNoResultMessage = () => "Нет результатов";
 const getLoadingMessage = () => "Загрузка...";
 
-export default memo(function ComboBox({values, placeholderText, isEditable, onChange, isLoading, selectedValueId = undefined}) {
+const customStyles = {
+    control: base => ({
+        ...base,
+        minHeight: 60,
+        minWidth: 300,
+        maxWidth: 400,
+    })
+};
+
+export default memo(function ComboBox({values, placeholderText, isEditable, isLoading, onChange = () => {},
+                                          selectedValuesId = undefined,
+                                          closeMenuOnSelect = true, isMulti = false}) {
     const selectInputRef = useRef();
 
     useEffect(() => {
-        if (!selectedValueId) {
+        if (!selectedValuesId || selectedValuesId.length === 0) {
             selectInputRef.current?.clearValue();
         }
+    }, [selectedValuesId])
 
-    }, [selectedValueId])
+    const findSelectedValues = (selectedIdList) => {
+        if (selectedIdList && selectedIdList.length !== 0) {
+            let selectedValues = values.filter(value => selectedIdList.includes(value.id));
 
-    const findSelectedValue = (selectedId) => {
-        if (selectedId) {
-            let selectedValue = values.find(value => value.id === selectedId);
-
-            return {value: selectedValue.id, label: selectedValue.name};
+            return selectedValues.map(selectedValue => {return {value: selectedValue.id, label: selectedValue.displayName}});
         } else {
             return undefined;
         }
@@ -35,9 +45,12 @@ export default memo(function ComboBox({values, placeholderText, isEditable, onCh
                 isDisabled={!isEditable}
                 isLoading={isLoading}
                 loadingMessage={getLoadingMessage}
-                onChange={(newValue) => onChange(newValue?.value)}
+                onChange={(newValue) => onChange(newValue?.map(v => v.value))}
                 isClearable={true}
-                value={findSelectedValue(selectedValueId)}
-                ref={selectInputRef} />
+                value={findSelectedValues(selectedValuesId)}
+                ref={selectInputRef}
+                closeMenuOnSelect={closeMenuOnSelect}
+                isMulti={isMulti}
+                styles={customStyles}/>
     )
 })

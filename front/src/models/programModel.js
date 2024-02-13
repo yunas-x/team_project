@@ -1,11 +1,9 @@
-import FieldOfStudyModel from "./fieldOfStudyModel";
+import ModelBase from "./base/modelBase";
 
-export default class ProgramModel extends FieldOfStudyModel {
-    fieldOfStudy;
+export default class ProgramModel extends ModelBase {
+    constructor(id, name, fieldOfStudyCode) {
+        super(id, name)
 
-    constructor(id, name, university, fieldOfStudy) {
-        super(id, name, university);
-
-        this.fieldOfStudy = fieldOfStudy;
+        this.fieldOfStudyCode = fieldOfStudyCode;
     }
 }

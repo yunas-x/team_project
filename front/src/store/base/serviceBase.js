@@ -1,5 +1,6 @@
 import StoreBase from "./storeBase";
 import {action, makeObservable, observable} from "mobx";
+import {checkAreArraysEqual} from "../../helpers/listHelpers";
 
 export default class ServiceBase {
     isLoading = false;
@@ -9,7 +10,7 @@ export default class ServiceBase {
 
         makeObservable(this, {
             isLoading: observable,
-            loadData: action,
+            loadAllData: action,
             setIsLoading: action,
         });
     }
@@ -17,26 +18,32 @@ export default class ServiceBase {
     /**
      * Makes request to obtain the data to store it.
      */
-    loadData() {
+    async loadAllData() {
         this._startLoading();
 
-        this.fetchData().then(response => {
-            console.log("after fetch " + response[0]?.name)
-            this.store.setNewItems(response.map(dto => this.mapDTOToModel(dto)));
+        const resultList = [];
 
-            this.setIsLoading(false);
-        })
-    }
+        let offset = 0;
+        const count = 99;
 
-    loadDataById(idList) {
-        this._startLoading();
+        let previousData;
 
-        this.fetchDataById(idList).then(response => {
-            console.log("after fetch " + response[0]?.name)
-            this.store.setNewItems(response.map(dto => this.mapDTOToModel(dto)));
+        while (true) {
+            const data = await this.fetchData(offset, count);
 
-            this.setIsLoading(false);
-        })
+            if (!data || data.length === 0 || checkAreArraysEqual(previousData, data)) {
+                break;
+            }
+
+            previousData = data;
+
+            resultList.push(...data);
+            offset += count;
+        }
+
+        this.store.setNewItems(resultList.map(dto => this.mapDTOToModel(dto)));
+
+        this.setIsLoading(false);
     }
 
     _startLoading() {
@@ -47,15 +54,8 @@ export default class ServiceBase {
     /**
      * Obtains the data and returns a list of dto
      */
-    async fetchData() {
+    async fetchData(offset, count) {
         throw new Error("Method 'fetchData()' must be implemented.");
-    }
-
-    /**
-     * Obtains the data filtered by ids and returns a list of dto
-     */
-    async fetchDataById(idList) {
-        throw new Error("Method 'fetchDataById()' must be implemented.");
     }
 
     mapDTOToModel(dto) {
@@ -66,7 +66,7 @@ export default class ServiceBase {
         return new StoreBase();
     }
 
-    setIsLoading(isLoading: boolean) {
+    setIsLoading(isLoading) {
         this.isLoading = isLoading;
     }
 }

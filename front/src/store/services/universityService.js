@@ -1,9 +1,11 @@
 import ServiceBase from "../base/serviceBase";
-import fetchUniversities from "../../api/fetchUniversities";
 import {mapUniversityDTOToModel, UniversityDTO} from "../dto/universityDTO";
 
 export class UniversityService extends ServiceBase {
-    async fetchData() {
+    async fetchData(offset, count) {
+        if (offset > 2) {
+            return new Promise(resolve => resolve([]));
+        }
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve([new UniversityDTO(1, "НИУ ВШЭ"), new UniversityDTO(2, "ПНИПУ")])

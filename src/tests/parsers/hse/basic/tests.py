@@ -2,11 +2,11 @@ import json
 from pathlib import Path
 from parsers.JsonValidator import JsonValidator
 from parsers.hse.basic.BasicParser import BasicParser
+from parsers.core.protocols.ParserProtocol import ParserProtocol
 
 
 def start_stress_testing(folder_with_pdf_files_path: str, folder_to_save_json_files_path: str,
-                         json_schema_full_path: str):
-    parser = BasicParser()
+                         json_schema_full_path: str, parser: ParserProtocol):
 
     # pd.set_option('display.max_rows', 13)
     # pd.set_option('display.max_columns', 12)
@@ -16,18 +16,34 @@ def start_stress_testing(folder_with_pdf_files_path: str, folder_to_save_json_fi
     json_folder_path = Path(folder_to_save_json_files_path)
     all_file_names = [full_file_name.name for full_file_name in list(pdf_folder_path.iterdir())]
 
+    counter = 0
     for i, file_name in enumerate(all_file_names):
-        try:
-            print("----")
-            print("started for: " + str(file_name))
-            res = parser.parse(str(pdf_folder_path / file_name))
-            with open(json_folder_path / (str(file_name) + ".json"), "w", encoding="utf-8") as json_file:
-                json.dump(res, json_file, ensure_ascii=False)
-            print(str((i + 1)) + " of " + str(len(all_file_names)) + " passed: " + str(file_name))
-        except Exception as e:
-            print(e)
-            print("failed: " + str(file_name))
+        if file_name[-3:] != "pdf":
+            continue
+
+        print("----")
+        print("started for: " + str(file_name))
+        res = parser.parse(str(pdf_folder_path / file_name))
+        with open(json_folder_path / (str(file_name) + ".json"), "w+", encoding="utf-8") as json_file:
+            json.dump(res, json_file, ensure_ascii=False)
+        print(str((i + 1)) + " of " + str(len(all_file_names)) + " passed: " + str(file_name))
+
+        counter += 1
+        if counter > 0:
             break
+
+    # for i, file_name in enumerate(all_file_names):
+    #     try:
+    #         print("----")
+    #         print("started for: " + str(file_name))
+    #         res = parser.parse(str(pdf_folder_path / file_name))
+    #         with open(json_folder_path / (str(file_name) + ".json"), "w+", encoding="utf-8") as json_file:
+    #             json.dump(res, json_file, ensure_ascii=False)
+    #         print(str((i + 1)) + " of " + str(len(all_file_names)) + " passed: " + str(file_name))
+    #     except Exception as e:
+    #         print(e)
+    #         print("failed: " + str(file_name))
+    #         break
 
     with open(json_schema_full_path, encoding="utf-8") as json_file:
         json_schema = json.load(json_file)

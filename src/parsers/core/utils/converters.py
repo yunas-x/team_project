@@ -14,7 +14,8 @@ def convert_pdf_to_data_frame(pdf_file_name: str, table_settings: dict = {}) -> 
             
             if table:
                 for row in table:
-                    df.loc[len(df)] = row
+                    if len(row) == len(df.columns):
+                        df.loc[len(df)] = row
 
     return df
 

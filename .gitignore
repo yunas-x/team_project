@@ -2,3 +2,5 @@
 /src/.idea
 /file_loader/.idea
 **/__pycache__/
+/curricula_examples/*
+**/temp_files/*

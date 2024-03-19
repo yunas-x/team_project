@@ -32,3 +32,4 @@ class BasicParserByLink(ParserProtocol):
             temp_file_service.remove_file(pdf_file_full_path)
 
         return result
+

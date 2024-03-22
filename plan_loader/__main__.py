@@ -10,7 +10,7 @@ def get_args() -> Namespace:
     arg_parser = ArgumentParser(prog='file_loader')
     
     arg_parser.add_argument('-d', '--dest', default=DEFAULT_DOWNLOAD_PATH)
-    arg_parser.add_argument('-m', '--mode', default=PlanType.ITMO_PLAN, choices=[tp.value for tp in PlanType])
+    arg_parser.add_argument('-m', '--mode', default=PlanType.HSE_ANNUAL_PLAN, choices=[tp.value for tp in PlanType])
     
     return arg_parser.parse_args()
 

@@ -1,6 +1,6 @@
 from parsers.core.classifiers.degree_classifier import degree_classifier_dict
 from parsers.hse.basic.data_classes.body_info import BodyRowInfo
-from parsers.hse.basic.data_classes.course_types import CourseType
+from parsers.core.classifiers.course_types import CourseType
 from parsers.hse.basic.data_classes.header_info import HeaderInfo
 
 

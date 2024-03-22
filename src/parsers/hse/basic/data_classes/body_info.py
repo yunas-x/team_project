@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from .course_types import CourseType
+from ....core.classifiers.course_types import CourseType
 
 
 @dataclass

@@ -43,7 +43,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "minLength": 5,
+          "minLength": 3,
           "maxLength": 150,
           "examples": [
               "Правовая граммотность",

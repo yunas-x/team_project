@@ -7,10 +7,10 @@ from plan_types import PlanType
 def get_args() -> Namespace:
     arg_parser = ArgumentParser(prog='file_loader')
     
-    default_path = Path.home() / 'Desktop' / 'pdfs'
+    default_path = Path.home() / 'Desktop' / 'annual'
     arg_parser.add_argument('-d', '--dest', default=str(default_path))
-    arg_parser.add_argument('-m', '--mode', default=PlanType.HSE_BASIC_PLAN, choices=[tp.value for tp in PlanType])
-    arg_parser.add_argument('--headless', default=False, action='store_true')
+    arg_parser.add_argument('-m', '--mode', default=PlanType.HSE_PLAN, choices=[tp.value for tp in PlanType])
+    arg_parser.add_argument('--headless', default=True, action='store_true')
     
     return arg_parser.parse_args()
 
@@ -18,5 +18,3 @@ def get_args() -> Namespace:
 if __name__ == '__main__':
     args = get_args()
     load(PlanType(args.mode), args.dest, args.headless)
-    
-    

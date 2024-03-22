@@ -2,52 +2,40 @@ from typing import override
 import pandas as pd
 from parsers.core.protocols.ParserProtocol import ParserProtocol
 from parsers.core.utils.converters import get_pdf_page_text
-from parsers.hse.annual.annual_helpers import get_programme_name, get_year_and_enrolled_in, get_hours, get_corrected_df
-from parsers.hse.utils import get_data_frame_by_pdf_path, prepare_table
+from parsers.hse.annual.annual_helpers import get_programme_name, get_year_and_enrolled_in, get_hours, get_body_row_list_without_year
+from parsers.hse.utils import get_data_frame_by_pdf_path
+from parsers.hse.annual.json_converter import convert_to_json
+from parsers.hse.annual.data_classes.header_info import HeaderInfo
+
+import time
 
 
 class AnnualParser(ParserProtocol):
     """Parser for annual HSE curricula"""
 
     @override
-    def parse(self, payload: str):
+    def parse(self, payload: str) -> dict:
         """
         Parses annual HSE curricula pdf file
         :param payload: pdf file path
         """
-
         pdf_path = payload
 
+        # ~0.2 seconds
         header_text_list = get_pdf_page_text(pdf_path, 0, True).split("\n")
         header_text_list = [text.strip() for text in header_text_list if text]
         
+        # ~0.3 seconds
         df = get_data_frame_by_pdf_path(pdf_path,
                                         table_settings={"text_x_tolerance": 1, "vertical_strategy": "lines_strict"})
-        df = prepare_table(df)
-        df = get_corrected_df(df)
 
-        programme = get_programme_name(header_text_list)
-        year, enrolled_in = get_year_and_enrolled_in(header_text_list)
+        header_info = HeaderInfo()
+        header_info.programme_name = get_programme_name(header_text_list)
 
-        result_table = []
+        year, header_info.enrollment_year = get_year_and_enrolled_in(header_text_list)
 
-        for row_index, row in df.iterrows():
-            course_name = row['dscpl']
-            department = row['podr']
-            credits = row['cred']
-            first_sem_hours = get_hours(row['hours_mod1']) + get_hours(row['hours_mod2'])
-            second_sem_hours = get_hours(row['hours_mod3']) + get_hours(row['hours_mod4'])
-
-            result_table.append(
-                [course_name, programme, credits, year, department, enrolled_in, first_sem_hours, second_sem_hours])
-
-        return pd.DataFrame(result_table, columns=[
-            'CourseName',
-            'Programme',
-            'Credits',
-            'Year',
-            'Department',
-            'EnrolledIn',
-            'FirstSemesterContactHours',
-            'SecondSemesterContactHours'
-        ])
+        body_row_list = get_body_row_list_without_year(df)
+        for row in body_row_list:
+            row.course_year = year
+        
+        return convert_to_json(header_info, body_row_list)

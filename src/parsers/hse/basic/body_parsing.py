@@ -1,7 +1,7 @@
 import re
 from typing import Any
 from .data_classes.body_info import BodyRowInfo
-from .data_classes.course_types import CourseType
+from ...core.classifiers.course_types import CourseType
 from ...core.utils.list_helpers import find_first_index
 
 

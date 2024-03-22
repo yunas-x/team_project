@@ -1,20 +1,21 @@
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
-from loader import load
-from plan_types import PlanType
+from enums import PlanType
+from loaders import get_loader
+import logging
+from config import DEFAULT_DOWNLOAD_PATH
 
 
 def get_args() -> Namespace:
     arg_parser = ArgumentParser(prog='file_loader')
     
-    default_path = Path.home() / 'Desktop' / 'annual'
-    arg_parser.add_argument('-d', '--dest', default=str(default_path))
-    arg_parser.add_argument('-m', '--mode', default=PlanType.HSE_PLAN, choices=[tp.value for tp in PlanType])
-    arg_parser.add_argument('--headless', default=True, action='store_true')
+    arg_parser.add_argument('-d', '--dest', default=DEFAULT_DOWNLOAD_PATH)
+    arg_parser.add_argument('-m', '--mode', default=PlanType.ITMO_PLAN, choices=[tp.value for tp in PlanType])
     
     return arg_parser.parse_args()
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - [%(name)s - %(levelname)s]: %(message)s')
     args = get_args()
-    load(PlanType(args.mode), args.dest, args.headless)
+    get_loader(args.mode).load(args.dest)

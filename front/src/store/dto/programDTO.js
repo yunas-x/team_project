@@ -9,6 +9,11 @@ export class ProgramDTO {
     field_name;
     field_group_code;
     field_group_name;
+
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+    }
 }
 
 export function mapProgramDTOToModel(dto) {

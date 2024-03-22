@@ -2,9 +2,11 @@
     display: flex;
     border: 1px solid rgba(0, 0, 0, 0.24);
     background-color: white;
-    min-height: 60px;
+    min-height: 120px;
     min-width: 100px;
-    padding: 5px;
+    padding: 10px;
+    gap: 10px;
+    justify-content: space-around;
 }
 
 .placeholder_block {

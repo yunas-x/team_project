@@ -11,9 +11,9 @@ const getLoadingMessage = () => "Загрузка...";
 const customStyles = {
     control: base => ({
         ...base,
-        minHeight: 60,
+        minHeight: 40,
         minWidth: 300,
-        maxWidth: 400,
+        maxWidth: 300,
     })
 };
 

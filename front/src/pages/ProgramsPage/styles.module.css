@@ -1,0 +1,19 @@
+.page {
+    display: flex;
+}
+
+.left_content {
+    width: 77%;
+    margin-left: 50px;
+    margin-right: 12px;
+    height: 300px;
+    background-color: aquamarine;
+}
+
+.right_content {
+    width: 23%;
+    margin-left: 12px;
+    margin-right: 50px;
+    height: 300px;
+    background-color: blue;
+}

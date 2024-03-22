@@ -5,6 +5,11 @@ export class FieldOfStudyDTO {
     field_name;
     field_group_code;
     field_group_name;
+
+    constructor(code, name) {
+        this.field_code = code;
+        this.field_name = name;
+    }
 }
 
 export function mapFieldOfStudyDTOToModel(dto) {

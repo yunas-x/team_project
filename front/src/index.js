@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./styles.css"
-import ProgramSelectionPage from "./pages/ProgramSelection/ProgramSelectionPage";
+import ProgramSelectionContainer from "./components/ProgramSelection/ProgramSelectionContainer";
+import {ProgramsPage} from "./pages/ProgramsPage/ProgramsPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <ProgramSelectionPage />
+      <ProgramsPage />
   </React.StrictMode>
 );

@@ -1,0 +1,78 @@
+.card {
+    border-radius: 5px;
+    border: 1px rgba(47, 47, 47, 0.18) solid;
+    width: 270px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(71deg, #ffd562, #ffce85, #fddf95);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    transition: transform .15s ease-out;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: scale(1.02)
+}
+
+.card_header {
+    display: flex;
+    justify-content: left;
+    align-items: end;
+    padding-top: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    min-height: 50px;
+}
+
+.card_title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2f2f2f;
+    word-wrap: anywhere;
+}
+
+.card_body {
+    min-height: 30px;
+    flex: 1;
+    font-size: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+ul {
+    padding-left: 15px;
+}
+
+li::marker {
+    font-size: 16px;
+}
+
+.card_footer {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    min-height: 30px;
+    gap: 10px;
+    background: linear-gradient(180deg, rgba(244, 81, 30, 0), rgba(244, 81, 30, 0.11));
+}
+
+.card_footer_item_holder {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 14px;
+}
+
+.location_img {
+    width: 20px;
+    height: 25px;
+}
+
+.time_img {
+    width: 20px;
+    height: 20px;
+    margin-right: 2px;
+}

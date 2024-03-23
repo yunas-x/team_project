@@ -59,7 +59,7 @@ class HseBaseLoader(BaseLoader, ABC):
             element = WebDriverWait(browser, 8).until(
                 EC.presence_of_element_located((By.XPATH, "//a[contains(@href, '" + hyp_signature + "')]")))
             
-            # Click an all links that expand tables with pdfs
+            # Click all links to expand tables with pdfs
             for element in browser.find_elements(By.XPATH, "//a[contains(@href, '" + hyp_signature + "')]"):
                 browser.execute_script("arguments[0].click();", element)
             
@@ -80,7 +80,7 @@ class HseBaseLoader(BaseLoader, ABC):
             for element in download_links:
                 start_time = time.perf_counter()
                 
-                # Getting the file name from outerHTML and not from href, because encoding breakes when using get_attribute on attributes
+                # Getting the file name from outerHTML and not from href, because encoding breakes when using get_attribute on actual attributes
                 re_groups = re.search(r"'.*?'", element.get_attribute('outerHTML'))
                 if re_groups is not None:
                     name = re_groups.group(0)[1:-1].replace(':', '').replace('&quot;', '').replace('/', ' ') + '.pdf'

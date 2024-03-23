@@ -5,6 +5,7 @@ from parsers.core.protocols.ParserProtocol import ParserProtocol
 from typing import Optional, Tuple
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from config import PARSING_PROCESS_COUNT, VALIDATION_PROCESS_COUNT
+import logging
 
 
 def parse(folder_with_pdf_files_path: str, folder_to_save_json_files_path: str, parser: ParserProtocol, process_count: int = PARSING_PROCESS_COUNT):
@@ -50,18 +51,18 @@ def __parse(all_file_names: list[str], pdf_folder_path: str, folder_to_save_json
             if file_name[-3:] != "pdf":
                 continue
 
-            print("----")
-            print("started for: " + str(file_name))
+            logging.info("----")
+            logging.info("started for: " + str(file_name))
             
             res = parser.parse(str(pdf_folder_path / file_name))
             
             with open(json_folder_path / (str(file_name) + ".json"), "w+", encoding="utf-8") as json_file:
                 json.dump(res, json_file, ensure_ascii=False)
                 
-            print(str((i + 1)) + " of " + str(len(all_file_names)) + " passed: " + str(file_name))
+            logging.info(str((i + 1)) + " of " + str(len(all_file_names)) + " passed: " + str(file_name))
 
         except Exception as e:
-            print(e)
+            logging.info(e)
 
 
 def validate(folder_with_pdf_files_path: str, folder_to_save_json_files_path: str, json_schema_full_path: str, process_count: int = VALIDATION_PROCESS_COUNT):
@@ -78,7 +79,7 @@ def validate(folder_with_pdf_files_path: str, folder_to_save_json_files_path: st
     all_file_names = [full_file_name.name for full_file_name in list(pdf_folder_path.iterdir())]
     
     if process_count == 1:
-        print(__validate(all_file_names, folder_to_save_json_files_path, json_schema_full_path))
+        logging.info(__validate(all_file_names, folder_to_save_json_files_path, json_schema_full_path))
     
     else:
         file_chunk_length = len(all_file_names) // process_count
@@ -96,10 +97,10 @@ def validate(folder_with_pdf_files_path: str, folder_to_save_json_files_path: st
                 try:
                     res.append(future.result())
                 except Exception as exc:
-                    print("There was an error. {}".format(exc))
+                    logging.info("There was an error. {}".format(exc))
                     
             for item in res:
-                print(item)
+                logging.info(item)
 
 
 def __validate(all_file_names: list[str], folder_to_save_json_files_path: str, json_schema_full_path: str) -> str:
@@ -122,13 +123,13 @@ def __validate(all_file_names: list[str], folder_to_save_json_files_path: str, j
             result, err = __validate_scheme(str(json_folder_path / (str(file_name) + ".json")), json_schema)
 
             if result is None:
-                print(str((i + 1)) + " of " + str(len(all_file_names)) + ", does not exist: " + str(file_name))
+                logging.info(str((i + 1)) + " of " + str(len(all_file_names)) + ", does not exist: " + str(file_name))
                 output += str((i + 1)) + " of " + str(len(all_file_names)) + ", does not exist: " + str(file_name) + '\n'
                 nonexist += 1
             elif result:
-                print(str((i + 1)) + " of " + str(len(all_file_names)) + ", correct: " + str(file_name))
+                logging.info(str((i + 1)) + " of " + str(len(all_file_names)) + ", correct: " + str(file_name))
             else:
-                print(str((i + 1)) + " of " + str(len(all_file_names)) + ", NOT correct: " + str(file_name))
+                logging.info(str((i + 1)) + " of " + str(len(all_file_names)) + ", NOT correct: " + str(file_name))
                 output += str((i + 1)) + " of " + str(len(all_file_names)) + ", NOT correct: " + str(file_name) + '\n'
                 output += err
                 counter += 1
@@ -154,6 +155,5 @@ def __validate_scheme(full_res_json_file_name: str, json_schema: dict) -> Tuple[
     
             return valid, error_string
     except Exception as e:
-        print(e)
-        input()
+        logging.exception(e)
         return None, None

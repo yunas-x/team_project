@@ -1,23 +1,46 @@
-.list_holder {
+.content_holder {
     display: flex;
+    flex-direction: column;
     border: 1px solid rgba(0, 0, 0, 0.24);
     background-color: white;
     min-height: 120px;
     min-width: 100px;
     padding: 10px;
-    gap: 10px;
-    justify-content: space-around;
 }
 
-.placeholder_block {
+.top_block {
     display: flex;
+    margin-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.search_block {
+    width: 30px;
+}
+
+.cards_holder {
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+    flex-wrap: wrap;
     width: 100%;
-    justify-content: center;
-    align-items: center;
-    color: rgba(128, 128, 128, 0.62);
+    max-width: 1000px;
 }
 
 .list_content_block {
     display: flex;
     flex-direction: column;
+}
+
+.pagination_top_block {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.pagination_bottom_block {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
 }

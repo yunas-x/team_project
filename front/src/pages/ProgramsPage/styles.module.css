@@ -3,7 +3,7 @@
 }
 
 .left_content {
-    width: 77%;
+    width: 100%;
     margin-left: 50px;
     margin-right: 12px;
     height: 300px;
@@ -12,6 +12,7 @@
 
 .right_content {
     width: 23%;
+    max-width: 230px;
     margin-left: 12px;
     margin-right: 50px;
     height: 300px;

@@ -11,6 +11,6 @@ export default class StoreBase {
     }
 
     setNewItems(items) {
-        this.items = items;
+        this.items = [...items];
     }
 }

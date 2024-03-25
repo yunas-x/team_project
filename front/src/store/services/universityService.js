@@ -1,5 +1,6 @@
 import ServiceBase from "../base/serviceBase";
 import {mapUniversityDTOToModel, UniversityDTO} from "../dto/universityDTO";
+import {universities} from "../../helpers/mock";
 
 export class UniversityService extends ServiceBase {
     async fetchData(offset, count) {
@@ -13,6 +14,14 @@ export class UniversityService extends ServiceBase {
         });
 
         //return (await fetchUniversities()).map(json => Object.assign(new UniversityDTO(), json));
+    }
+
+    load() {
+        this.store.setNewItems(universities);
+    }
+
+    getUniversityModel(id) {
+        return this.store.items.find(university => university.id === id);
     }
 
     mapDTOToModel(dto) {

@@ -45,7 +45,7 @@ export default memo(function ComboBox({values, placeholderText, isEditable, isLo
                 isDisabled={!isEditable}
                 isLoading={isLoading}
                 loadingMessage={getLoadingMessage}
-                onChange={(newValue) => onChange(newValue?.map(v => v.value))}
+                onChange={(newValue) => onChange(newValue ? [].concat(newValue).map(v => v.value) : newValue)}
                 isClearable={true}
                 value={findSelectedValues(selectedValuesId)}
                 ref={selectInputRef}

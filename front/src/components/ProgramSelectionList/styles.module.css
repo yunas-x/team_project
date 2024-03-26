@@ -21,8 +21,8 @@
 
 .cards_holder {
     display: flex;
-    gap: 10px;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 20px;
     flex-wrap: wrap;
     width: 100%;
     max-width: 1000px;

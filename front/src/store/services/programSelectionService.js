@@ -1,10 +1,12 @@
-import {action, computed, makeObservable} from "mobx";
+import {action, computed, makeObservable, observable} from "mobx";
 import {ProgramSelectionModel} from "../../models/programSelectionModel";
+import {checkAreArraysEqual} from "../../helpers/listHelpers";
 
 export class ProgramSelectionService {
     selectedUniversityModel;
     selectedFieldOfStudyIdList = [];
     selectedDegreeIdList = [];
+    cachedPrograms = [];
 
     constructor(universityService, fieldOfStudyService, programService, degreeStore) {
         this.universityService = universityService;
@@ -12,8 +14,9 @@ export class ProgramSelectionService {
         this.programService = programService;
         this.degreeStore = degreeStore;
 
-        makeObservable({
-            getPrograms: computed,
+        makeObservable(this, {
+            cachedPrograms: observable,
+            programCount: computed,
             updateSelectedInfo: action,
         })
     }
@@ -23,36 +26,46 @@ export class ProgramSelectionService {
             return [];
         }
 
-        const programModelIdListOfUniversity = this.programService.store.items.map(program => program.id);
-        let fullProgramInfoList = this.selectedUniversityModel.allProgramDataList.filter(data => programModelIdListOfUniversity.includes(data.programId))
+        const fullProgramInfoList = this.cachedPrograms.slice(countToSkip, countToSkip + countToTake);
 
-        fullProgramInfoList = fullProgramInfoList.slice(countToSkip, countToSkip + countToTake);
+        return this.#createSelectionModels(fullProgramInfoList, countToSkip);
+    }
 
-        if (this.selectedFieldOfStudyIdList.length + this.selectedDegreeIdList.length === 0) {
-            return this.#createSelectionModels(fullProgramInfoList)
+    get programCount() {
+        if (!this.cachedPrograms) {
+            return 0;
         }
 
-        let fullFillData = [...fullProgramInfoList]
-
-        if (this.selectedFieldOfStudyIdList.length !== 0) {
-            fullFillData = [...fullFillData, this.selectedUniversityModel.allProgramDataList.filter(data => this.selectedFieldOfStudyIdList.includes(data.fieldOfStudyId))]
-        }
-
-        if (this.selectedDegreeIdList.length !== 0) {
-            fullFillData = [...fullFillData, this.selectedUniversityModel.allProgramDataList.filter(data => this.selectedDegreeIdList.includes(data.degreeId))]
-        }
-
-        return this.#createSelectionModels(fullFillData);
+        return this.cachedPrograms.length
     }
 
     updateSelectedInfo(universityId, fieldOfStudyIdList, degreeIdList) {
         this.selectedUniversityModel = this.universityService.getUniversityModel(universityId);
         this.selectedFieldOfStudyIdList = [...fieldOfStudyIdList];
         this.selectedDegreeIdList = [...degreeIdList];
+
+        if (!this.selectedUniversityModel)
+        {
+            return;
+        }
+
+        const programModelIdListOfUniversity = this.programService.store.items.map(program => program.id);
+        let fullProgramInfoList = this.selectedUniversityModel.allProgramDataList.filter(data => programModelIdListOfUniversity.includes(data.programId))
+
+        if (this.selectedFieldOfStudyIdList.length !== 0) {
+            fullProgramInfoList = fullProgramInfoList.filter(data => this.selectedFieldOfStudyIdList.includes(data.fieldOfStudyId))
+        }
+
+        if (this.selectedDegreeIdList.length !== 0) {
+            fullProgramInfoList = fullProgramInfoList.filter(data => this.selectedDegreeIdList.includes(data.degreeId))
+        }
+
+        this.cachedPrograms = fullProgramInfoList;
     }
 
-    #createSelectionModels(allProgramDataList) {
-        return allProgramDataList.map(data => new ProgramSelectionModel(this.selectedUniversityModel,
+    #createSelectionModels(allProgramDataList, countToSkip) {
+        return allProgramDataList.map((data, i) => new ProgramSelectionModel(i + countToSkip,
+            this.selectedUniversityModel,
             this.fieldOfStudyService.getFieldOfStudyModel(data.fieldOfStudyId),
             this.programService.getProgramModel(data.programId),
             this.degreeStore.items.find(model => model.id === data.degreeId),

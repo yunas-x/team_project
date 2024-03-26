@@ -1,5 +1,6 @@
 export class ProgramSelectionModel {
-    constructor(universityModel, fieldOfStudyModel, programModel, degreeModel, yearCount) {
+    constructor(id, universityModel, fieldOfStudyModel, programModel, degreeModel, yearCount) {
+        this.id = id
         this.universityModel = universityModel;
         this.fieldOfStudyModel = fieldOfStudyModel;
         this.programModel = programModel;

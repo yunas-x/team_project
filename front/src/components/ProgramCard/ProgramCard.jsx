@@ -2,10 +2,18 @@ import styles from './styles.module.css'
 import location from '../../imgs/location.svg'
 import time from '../../imgs/time.svg'
 import {yearPlural} from "../../helpers/consts";
+import {getIsSelected} from "../../controllers/programsSelectionController";
+import {observer} from "mobx-react-lite";
 
-export const ProgramCard = ({cardModel, isSelected, onClick}) => {
+export const ProgramCard = observer(({cardModel, programsSelectionModel, programsSelectionController}) => {
+    const isSelected = getIsSelected(programsSelectionModel, programsSelectionController.selectedList);
+    const isBlocked = !isSelected && programsSelectionController.isReady;
+
     return (
-        <div className={styles.card}>
+        <div className={isBlocked ? `${styles.card} ${styles.blocked_card}` : isSelected ? `${styles.card} ${styles.selected_card}` : `${styles.card}`}
+             onClick={() => isSelected
+                 ? programsSelectionController.removeSelected(programsSelectionModel)
+                 : programsSelectionController.setSelected(programsSelectionModel)}>
             <div className={styles.card_header}>
                 <span className={styles.card_title}>{cardModel.programName}</span>
             </div>
@@ -31,4 +39,4 @@ export const ProgramCard = ({cardModel, isSelected, onClick}) => {
             </div>
         </div>
     )
-}
+})

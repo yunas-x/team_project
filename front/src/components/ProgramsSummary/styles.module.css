@@ -1,0 +1,103 @@
+.content_holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 300px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    border-radius: 12px;
+}
+
+.compare_btn_holder {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.compare_btn {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 5px;
+    width: 120px;
+    height: 40px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.compare_btn span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+    padding-top: 1px;
+}
+
+.compare_btn span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.compare_btn:hover span {
+    padding-right: 15px;
+}
+
+.compare_btn:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.list_holder {
+    width: 100%;
+    height: 100%;
+}
+
+.info_holder {
+    display: flex;
+    padding: 4px;
+    background: linear-gradient(71deg, #d3ff62, #bdff38, #a8ff7d);
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 20px;
+    border-radius: 10px 10px
+}
+
+.university_holder {
+    display: flex;
+    flex-direction: column;
+    padding: 3px;
+}
+
+.program_name {
+    font-size: 14px;
+    margin-left: 4px;
+}
+
+.remove_block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove_btn_holder {
+    display: flex;
+}
+
+.remove_btn_holder:hover {
+    filter: brightness(80%);
+}
+
+.remove_img {
+    height: 30px;
+    width: 30px;
+}

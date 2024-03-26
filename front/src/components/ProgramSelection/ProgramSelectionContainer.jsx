@@ -1,6 +1,6 @@
 import ComboBox from "../ComboBox/ComboBox";
 import ProgramSelectionServicesProvider from "../../store/programSelectionServicesProvider";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {observer} from "mobx-react-lite";
 import styles from './styles.module.css'
 import ProgramSelectionList from "../ProgramSelectionList/ProgramSelectionList";
@@ -22,6 +22,16 @@ const ProgramSelectionContainer = observer(() => {
     const [universityService, fieldOfStudyService, programService, degreeStore] =
         [servicesProvider.universityService, servicesProvider.fieldOfStudyService, servicesProvider.programService, servicesProvider.degreeStore];
 
+    const getFieldOfStudies = useCallback (() => {
+        if (!selectedUniversityId) {
+            return [];
+        }
+
+        const universityModel = universityService.getUniversityModel(selectedUniversityId[0]);
+
+        return fieldOfStudyService.store.items.filter(fieldOfStudy => universityModel.allProgramDataList.map(data => data.fieldOfStudyId).includes(fieldOfStudy.id))
+    }, [universityService, selectedUniversityId, fieldOfStudyService.store.items]);
+
     useEffect(() => {
         //programService.loadFilteredData(createFilterProgramObject(fieldOfStudyService.store, selectedFieldsOfStudyId, selectedDegreesId));
         if (selectedUniversityId) {
@@ -39,6 +49,11 @@ const ProgramSelectionContainer = observer(() => {
         let selectedUniversityId = selectedIdList && selectedIdList.length === 0 ? undefined : selectedIdList;
 
         setSelectedUniversityId(selectedUniversityId);
+
+        if (!selectedUniversityId) {
+            setSelectedFieldsOfStudyId(undefined);
+            setSelectedDegreesId(undefined);
+        }
     }
 
     function onFieldsSelectionChanged(selectedIdList) {
@@ -55,33 +70,36 @@ const ProgramSelectionContainer = observer(() => {
 
     return (
         <div>
-            <div className={styles.controls_holder}>
-                <div className={styles.controls_bg}/>
+            {/*<div className={styles.controls_holder}>*/}
+            {/*    <div className={styles.controls_bg}/>*/}
 
-                <div className={styles.combo_box_holder}>
-                    <ComboBox values={universityService.store.items}
-                              placeholderText={"ВУЗ"}
-                              onChange={onUniversitySelectionChanged}
-                              selectedValuesId={selectedUniversityId}
-                              isEditable={true}
-                              isLoading={universityService.isLoading} />
-                </div>
+            {/*    <div className={styles.combo_box_holder}>*/}
+            {/*        /!*<ComboBox values={universityService.store.items}*!/*/}
+            {/*        /!*          placeholderText={"ВУЗ"}*!/*/}
+            {/*        /!*          onChange={onUniversitySelectionChanged}*!/*/}
+            {/*        /!*          selectedValuesId={selectedUniversityId}*!/*/}
+            {/*        /!*          isEditable={true}*!/*/}
+            {/*        /!*          isLoading={universityService.isLoading} />*!/*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
-                <div className={styles.compare_btn_holder}>
-                    <button className={styles.compare_btn}>
-                        <span>Compare</span>
-                    </button>
-                </div>
-            </div>
-
-            <div className={styles.controls_placeholder_block} />
+            {/*<div className={styles.controls_placeholder_block} />*/}
 
             <div className={styles.content_holder}>
                 <div className={styles.filters_holder}>
-                    <ComboBox values={fieldOfStudyService.store.items}
+                    <div className={styles.university_holder}>
+                        <ComboBox values={universityService.store.items}
+                                  placeholderText={"ВУЗ"}
+                                  onChange={onUniversitySelectionChanged}
+                                  selectedValuesId={selectedUniversityId}
+                                  isEditable={true}
+                                  isLoading={universityService.isLoading} />
+                    </div>
+
+                    <ComboBox values={getFieldOfStudies()}
                               placeholderText={"Направление обучения"}
                               onChange={onFieldsSelectionChanged}
-                              isEditable={true}
+                              isEditable={selectedUniversityId}
                               isLoading={fieldOfStudyService.isLoading}
                               selectedValuesId={selectedFieldsOfStudyId}
                               closeMenuOnSelect={false}
@@ -90,7 +108,7 @@ const ProgramSelectionContainer = observer(() => {
                     <ComboBox values={degreeStore.items}
                               placeholderText={"Уровень образования"}
                               onChange={onDegreesSelectionChanged}
-                              isEditable={true}
+                              isEditable={selectedUniversityId}
                               isLoading={false}
                               selectedValuesId={selectedDegreesId}
                               closeMenuOnSelect={false}

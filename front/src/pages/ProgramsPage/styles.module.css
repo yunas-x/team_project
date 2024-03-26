@@ -1,9 +1,11 @@
 .page {
     display: flex;
+    justify-content: center;
 }
 
 .left_content {
     width: 100%;
+    max-width: 1200px;
     margin-left: 50px;
     margin-right: 12px;
     height: 300px;
@@ -11,10 +13,15 @@
 }
 
 .right_content {
-    width: 23%;
-    max-width: 230px;
     margin-left: 12px;
     margin-right: 50px;
+    max-width: 230px;
     height: 300px;
-    background-color: blue;
+    width: 23%;
+    display: flex;
+}
+
+.wrapper {
+    position: fixed;
+    width: 230px;
 }

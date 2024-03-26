@@ -30,7 +30,7 @@ const ProgramSelectionList = observer(({isLoading, programSelectionService}) => 
     return (
         <div className={styles.content_holder}>
             <div className={styles.top_block}>
-                <span>Total programs: {programCount}</span>
+                <span>Найдено программ: {programCount}</span>
 
                 <div className={styles.search_block}>
                 </div>

@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./styles.css"
-import ProgramSelectionContainer from "./components/ProgramSelection/ProgramSelectionContainer";
-import {ProgramsPage} from "./pages/ProgramsPage/ProgramsPage";
+import {ComparisonController} from "./controllers/comparisonController";
+import {App} from "./App";
+
+export const comparisonController = new ComparisonController()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <ProgramsPage />
+      <App/>
   </React.StrictMode>
 );

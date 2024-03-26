@@ -3,6 +3,9 @@ import FieldOfStudyModel from "../models/fieldOfStudyModel";
 import ProgramModel from "../models/programModel";
 import {AllProgramData} from "../models/allProgramData";
 import {DegreeModel} from "../models/degreeModel";
+import {PieData} from "../models/comparison/pieData";
+import {LineChartData} from "../models/comparison/lineChartData";
+import {CourseComparisonData} from "../models/comparison/courseComparisonData";
 
 export const degrees = [
     new DegreeModel(3, "Бакалавриат"),
@@ -52,4 +55,26 @@ const hseData = [
 
 export const universities = [
     new UniversityModel(1, "НИУ ВШЭ", "Москва", hseData),
+]
+
+export const pieDataList = [
+    new PieData(1, "Лядова", 45),
+    new PieData(2, "Дацун", 40),
+    new PieData(3, "Управление проектами", 4),
+    new PieData(4, "Ржомбанье", 6),
+]
+
+export const lineChartDataList = [
+    new LineChartData(1, 30, 1),
+    new LineChartData(2, 50, 2),
+    new LineChartData(3, 43, 3),
+    new LineChartData(4, 101, 4),
+]
+
+export const courseComparisonDataList = [
+    new CourseComparisonData(1, "Лядова", "Дацун", 99),
+    new CourseComparisonData(2, "Прога", "Олимпиадная прога", 30),
+    new CourseComparisonData(3, "Рыбалка", "Охота", 40),
+    new CourseComparisonData(4, "Прохождение СОПа", "Написание диплома", 2),
+    new CourseComparisonData(5, "Разработка ПО", "Проектирование архитектуры", 5),
 ]

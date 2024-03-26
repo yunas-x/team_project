@@ -70,21 +70,6 @@ const ProgramSelectionContainer = observer(() => {
 
     return (
         <div>
-            {/*<div className={styles.controls_holder}>*/}
-            {/*    <div className={styles.controls_bg}/>*/}
-
-            {/*    <div className={styles.combo_box_holder}>*/}
-            {/*        /!*<ComboBox values={universityService.store.items}*!/*/}
-            {/*        /!*          placeholderText={"ВУЗ"}*!/*/}
-            {/*        /!*          onChange={onUniversitySelectionChanged}*!/*/}
-            {/*        /!*          selectedValuesId={selectedUniversityId}*!/*/}
-            {/*        /!*          isEditable={true}*!/*/}
-            {/*        /!*          isLoading={universityService.isLoading} />*!/*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-
-            {/*<div className={styles.controls_placeholder_block} />*/}
-
             <div className={styles.content_holder}>
                 <div className={styles.filters_holder}>
                     <div className={styles.university_holder}>
@@ -118,7 +103,7 @@ const ProgramSelectionContainer = observer(() => {
                 <div className={styles.filters_placeholder_block} />
 
                 {!selectedUniversityId
-                    ? <div className={styles.placeholder_block}>Выберите ВУЗ для выбора программ обучения</div>
+                    ? <div className={styles.placeholder_block}>Выберите ВУЗ для просмотра программ обучения</div>
                         :
                 <ProgramSelectionList isLoading={programService.isLoading}
                                       programSelectionService={programSelectionService} />

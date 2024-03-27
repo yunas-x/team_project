@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["ProgramInfo"],
+  "properties": {
+    "ProgramInfo": {
+      "type": "object",
+      "properties": {
+        "name": { 
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 150,
+          "examples": [
+              "Программная инженерия",
+              "Прикладной анализ данных",
+              "Право"
+          ]
+        },
+        "yearEnrolled": { 
+          "type": "integer",
+          "minimum": 2000,
+          "maximum": 2050,
+          "examples": [
+              2020,
+              2022,
+              2018
+          ]
+        },
+        "fields_of_study": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "items": {
+            "$ref":"#/$defs/field_of_study"
+          }
+        },
+        "degree": {
+          "$ref":"#/$defs/degree"
+        },
+        "courses": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/course"
+          }
+        }
+      },
+      "required": ["name", "fields_of_study", "degree", "yearEnrolled", "courses"]
+    }
+  },
+  "$defs": {
+    "course": { 
+      "type": "object",
+      "required": ["name", "classroomHours", "readBy", "type", "credits", "year"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 350,
+          "examples": [
+              "Правовая граммотность",
+              "Экономика для гумманитариев",
+              "Высшая математика"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+              "Обязательный", 
+              "Факультативный", 
+              "По выбору"
+          ]
+        },
+        "credits": {
+          "type": "integer",
+          "minimum": 0,
+          "exclusiveMaximum": 60,
+          "examples": [
+              10,
+              12,
+              2
+          ]
+        },
+        "classroomHours": {
+          "type": "integer",
+          "minimum": 0,
+          "exclusiveMaximum": 1000
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6
+        },
+        "comments": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "type": "string"
+          }
+        },
+        "readBy": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 150,
+          "examples": [
+              "Департмент программной инженерии", 
+              "Кафедра ИТБ", 
+              "Кафедра гражданского права"
+          ]
+        }
+      }
+    },
+    "field_of_study": {
+      "type": "object",
+      "required": ["group", "code", "name"],
+      "properties": {
+        "group": {
+          "$ref": "#/$defs/field_group"
+        },
+        "code": { 
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 8,
+          "examples": [
+              "09.03.04",
+              "01.03.01"
+          ]
+        },
+        "name": { 
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 100,
+          "examples": [
+              "Программная инженерия",
+              "Математика"
+          ]
+        }
+      }
+    },
+    "field_group": {
+      "type": "object",
+      "required": ["code", "name"],
+      "properties": { 
+        "code": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60,
+          "examples": [
+              1,
+              9
+          ]
+        },
+        "name": { 
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 100,
+          "examples": [
+              "Математика и механика",
+              "Информатика и вычислительная техника"
+          ]
+        } 
+      }
+    },
+    "degree": {
+      "type": "object",
+      "required": ["code", "degreeName"],
+      "properties": { 
+        "code": { 
+          "type": "integer",
+          "minimum": 1,
+          "exclusiveMaximum": 9,
+          "examples": [
+              3,
+              4
+          ]
+        }, 
+        "degreeName": { 
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 200,
+          "examples": [
+              "Бакалавр",
+              "Магистр"
+          ]
+        } 
+      }
+    }
+  }
+}

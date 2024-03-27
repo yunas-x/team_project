@@ -1,4 +1,5 @@
 import re
+import regex
 
 
 def get_speciality_code_matching(text) -> re.Match | None:
@@ -27,8 +28,8 @@ def get_words_in_quotes(text) -> str | None:
     Finds first occurrence of a word that written in quotation marks.
     For example, for the text "Lorem ipsum "maybe" lorem" Match with "maybe" will be returned.
     """
-
-    return find_first_match(r"\"(?:[\dA-zА-я\-\.:,;()'ёЁ]+[^\S\f\t\r\n]?)+\"", text)
+    
+    return find_first_match(r"\"(?:[\dA-zА-я\-\.:,;()'ёЁ\/&]+[^\S\f\t\r\n]?)+\"", text)
 
 
 def remove_initials_from_text(text) -> str:
@@ -39,7 +40,12 @@ def remove_initials_from_text(text) -> str:
 
 
 def find_first_match(pattern, text) -> str | None:
-    match = re.search(pattern, text)
+    
+    try:
+        match = regex.search(pattern, text, timeout=5)
+    except Exception as e:
+        print(e)
+        return None
 
     if match:
         return match[0]

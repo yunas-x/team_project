@@ -115,14 +115,14 @@ def increase_pointer_for_programme_row(header_text_list, pointer: Pointer):
 
 def get_programme_name(entry_list, pointer: Pointer):
     programme_row = entry_list[pointer.pointer]
+    
     programme_row = remove_initials_from_text(programme_row.strip().replace(" ___________", ""))
     programme_row = __replace_inner_brackets(programme_row.strip())
-
     programme = get_words_in_quotes(programme_row)
-
     pointer.increase_pointer()
 
-    return programme.strip("\"")
+    res = programme.strip("\"")
+    return res
 
 
 def __replace_inner_brackets(string: str) -> str:

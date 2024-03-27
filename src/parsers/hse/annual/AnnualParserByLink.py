@@ -31,6 +31,4 @@ class AnnualParserByLink(ParserProtocol):
         finally:
             temp_file_service.remove_file(pdf_file_full_path)
 
-        print(result)
-        # to be implemented
-        return {}
+        return result

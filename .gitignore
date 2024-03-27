@@ -1,3 +1,4 @@
+**/.venv/
 /src/venv
 **/.idea/
 **/__pycache__/
@@ -25,3 +26,10 @@
 /front/npm-debug.log*
 /front/yarn-debug.log*
 /front/yarn-error.log*
+/src/.idea
+/file_loader/.idea
+**/__pycache__/
+/curricula_examples/*
+**/temp_files/*
+/media/plans/*
+/media/output/*

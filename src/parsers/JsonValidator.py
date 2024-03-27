@@ -17,4 +17,4 @@ class JsonValidator(ValidatorProtocol, InitFromJson):
             schema = self._schema
         
         validator = jsonschema.Draft7Validator(schema=schema)
-        return validator.is_valid(data)
+        return validator.is_valid(data), validator.iter_errors(data)

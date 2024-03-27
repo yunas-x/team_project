@@ -1,4 +1,6 @@
 import {action, computed, makeObservable, observable} from "mobx";
+import {NotificationManager} from "react-notifications";
+import {getMasterId} from "../helpers/mock";
 
 const readyCount = 2
 
@@ -28,14 +30,16 @@ export class ProgramsSelectionController {
     }
 
     setSelected(programsSelectionModel) {
-        console.log("setSelected")
-        if (this.selectedList.filter(selectedModel => selectedModel.degreeModel.id !== programsSelectionModel.degreeModel.id).length !== 0) {
-            console.log("firstReturn")
+        if (this.selectedList.filter(selectedModel => selectedModel.degreeModel.id !== programsSelectionModel.degreeModel.id
+            && selectedModel.degreeModel.id === getMasterId()).length !== 0) {
+            NotificationManager.warning('Можно сравнивать программы только со схожим уровнем образования',
+                'Выбрано "' + this.selectedList[0].degreeModel.displayName + '"',
+                3500)
+
             return;
         }
 
         if (this.selectedList.length === readyCount) {
-            console.log("secondReturn")
             return;
         }
 

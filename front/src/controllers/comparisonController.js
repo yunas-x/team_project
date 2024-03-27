@@ -1,6 +1,12 @@
 import {ComparisonData} from "../models/comparison/comparisonData";
 import {ProgramComparisonData} from "../models/comparison/programComparisonData";
-import {courseComparisonDataList, lineChartDataList, pieDataList} from "../helpers/mock";
+import {
+    courseComparisonDataList,
+    lineChartDataList,
+    lineChartDataList1,
+    lineChartDataList2,
+    pieDataList, pieDataList1, pieDataList2
+} from "../helpers/mock";
 import {action, makeObservable, observable} from "mobx";
 
 export class ComparisonController {
@@ -23,13 +29,10 @@ export class ComparisonController {
         this.isLoading = true;
         // fetch expected
 
-        const pieData = pieDataList;
-        const lineChartData = lineChartDataList;
-
         this.isComparisonOpened = true;
 
-        this.comparisonData = new ComparisonData(this.#createProgramComparisonData(firstProgramSelectionModel, pieData, lineChartData),
-            this.#createProgramComparisonData(secondProgramSelectionModel, pieData, lineChartData),
+        this.comparisonData = new ComparisonData(this.#createProgramComparisonData(firstProgramSelectionModel, pieDataList1, lineChartDataList1),
+            this.#createProgramComparisonData(secondProgramSelectionModel, pieDataList2, lineChartDataList2),
             courseComparisonDataList)
 
 

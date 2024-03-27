@@ -1,5 +1,7 @@
 import styles from './styles.module.css'
 import {comparisonController} from "../../index";
+import {CustomPieChart} from "../../components/CustomPieChart";
+import {CustomLineChart} from "../../components/CustomLineChart";
 
 const onBackClicked = () => {
     comparisonController.closeComparison();
@@ -29,7 +31,7 @@ const ProgramComparisonPage = () => {
         <div className={styles.root}>
             <div className={styles.content_holder}>
                 <div className={styles.back_btn_holder}>
-                    <button onClick={() => onBackClicked()}>Назад</button>
+                    <button className={styles.back_btn} onClick={() => onBackClicked()}><span>Назад</span></button>
                 </div>
                 <div className={styles.top_label}>Сравнение образовательных программ</div>
 
@@ -44,7 +46,7 @@ const ProgramComparisonPage = () => {
                         </div>
                     </div>
 
-                    <div className={styles.divider} />
+                    <div className={styles.vr_divider} />
 
                     <div className={styles.program_name}>
                         <span>{secondComparisonData.programName}</span>
@@ -73,6 +75,28 @@ const ProgramComparisonPage = () => {
                             <div className={styles.table_middle_data}>{comparisonData.similarityPercent}%</div>
                             <div className={styles.table_right_data}>{comparisonData.secondCourseName}</div>
                         </div>)}
+
+                    <div className={styles.hr_divider} />
+
+                    <div className={styles.pie_charts_holder}>
+                        <div className={styles.pie_chart_holder}>
+                            <CustomPieChart pieChartDataList={firstComparisonData.pieDataList}/>
+                        </div>
+
+                        <div className={styles.pie_chart_holder}>
+                            <CustomPieChart pieChartDataList={secondComparisonData.pieDataList}/>
+                        </div>
+                    </div>
+
+                    <div className={styles.line_charts_holder}>
+                        <div className={styles.line_chart_holder}>
+                            <CustomLineChart lineChartDataList={firstComparisonData.lineChartDataList} />
+                        </div>
+
+                        <div className={styles.line_chart_holder}>
+                            <CustomLineChart lineChartDataList={secondComparisonData.lineChartDataList} />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

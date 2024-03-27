@@ -15,7 +15,7 @@ export const ProgramCard = observer(({cardModel, programsSelectionModel, program
                  ? programsSelectionController.removeSelected(programsSelectionModel)
                  : programsSelectionController.setSelected(programsSelectionModel)}>
             <div className={styles.card_header}>
-                <span className={styles.card_title}>{cardModel.programName}</span>
+                <span className={cardModel.programName.length < 50 ? `${styles.card_title}` : `${styles.card_title} ${styles.small_card_title}`}>{cardModel.programName}</span>
             </div>
 
             <div className={styles.card_body}>

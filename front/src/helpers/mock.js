@@ -13,19 +13,23 @@ export const degrees = [
     new DegreeModel(5, "Специалитет"),
 ]
 
+export function getMasterId() {
+    return degrees[1].id;
+}
+
 export const fieldOfStudies = [
-    new FieldOfStudyModel("01.02.03", "Программная инженерия"),
-    new FieldOfStudyModel("01.02.04", "Бизнес-информатика"),
-    new FieldOfStudyModel("03.01.02", "Экономика"),
-    new FieldOfStudyModel("04.01.03", "Юриспруденция"),
-    new FieldOfStudyModel("05.02.03", "Право"),
+    new FieldOfStudyModel("09.03.04", "Программная инженерия"),
+    new FieldOfStudyModel("38.04.05", "Бизнес-информатика"),
+    new FieldOfStudyModel("38.03.01", "Экономика"),
+    new FieldOfStudyModel("40.03.01", "Юриспруденция"),
     new FieldOfStudyModel("42.03.05", "Медиакоммуникации"),
     new FieldOfStudyModel("41.03.04", "Политология"),
     new FieldOfStudyModel("03.03.02", "Физика"),
+    new FieldOfStudyModel("10.05.01", "Компьютерная безопасность"),
 ]
 
 export const programs = [
-    new ProgramModel(1, "Разработка интеллектуальных систем для бизнеса"), // se
+    new ProgramModel(1, "Программная инженерия"), // se
     new ProgramModel(2, "Экономика и статистика"), // econo
     new ProgramModel(3, "Цифровой юрист"), // yuri
     new ProgramModel(4, "Юриспруденция"), // yuri
@@ -35,46 +39,64 @@ export const programs = [
     new ProgramModel(8, "Политология и мировая политика"), // poli
     new ProgramModel(9, "Физика"),
     new ProgramModel(10, "Политология"), // poli
+    new ProgramModel(11, "Бизнес-информатика: цифровое предприятие и управление информационными системами"),
+    new ProgramModel(12, "Компьютерная безопасность")
 ]
 
 const hseData = [
     new AllProgramData(programs[0].id, fieldOfStudies[0].id, degrees[0].id, 4),
-    new AllProgramData(programs[0].id, fieldOfStudies[1].id, degrees[0].id, 5),
+    new AllProgramData(programs[10].id, fieldOfStudies[1].id, degrees[1].id, 2),
     new AllProgramData(programs[1].id, fieldOfStudies[2].id, degrees[0].id, 4),
-    new AllProgramData(programs[1].id, fieldOfStudies[2].id, degrees[1].id, 2),
     new AllProgramData(programs[2].id, fieldOfStudies[3].id, degrees[0].id, 4),
-    new AllProgramData(programs[3].id, fieldOfStudies[3].id, degrees[0].id, 5),
-    new AllProgramData(programs[3].id, fieldOfStudies[3].id, degrees[1].id, 2),
+    new AllProgramData(programs[11].id, fieldOfStudies[7].id, degrees[2].id, 6),
+    new AllProgramData(programs[3].id, fieldOfStudies[3].id, degrees[0].id, 4),
     new AllProgramData(programs[4].id, fieldOfStudies[2].id, degrees[0].id, 4),
-    new AllProgramData(programs[5].id, fieldOfStudies[5].id, degrees[0].id, 5),
-    new AllProgramData(programs[6].id, fieldOfStudies[3].id, degrees[0].id, 6),
-    new AllProgramData(programs[7].id, fieldOfStudies[6].id, degrees[0].id, 4),
-    new AllProgramData(programs[8].id, fieldOfStudies[7].id, degrees[0].id, 4),
-    new AllProgramData(programs[9].id, fieldOfStudies[6].id, degrees[0].id, 5),
+    new AllProgramData(programs[5].id, fieldOfStudies[4].id, degrees[0].id, 4),
+    new AllProgramData(programs[6].id, fieldOfStudies[3].id, degrees[0].id, 4),
+    new AllProgramData(programs[7].id, fieldOfStudies[5].id, degrees[0].id, 4),
+    new AllProgramData(programs[8].id, fieldOfStudies[6].id, degrees[0].id, 4),
+    new AllProgramData(programs[9].id, fieldOfStudies[5].id, degrees[0].id, 5),
 ]
 
 export const universities = [
     new UniversityModel(1, "НИУ ВШЭ", "Москва", hseData),
 ]
 
-export const pieDataList = [
-    new PieData(1, "Лядова", 45),
-    new PieData(2, "Дацун", 40),
-    new PieData(3, "Управление проектами", 4),
-    new PieData(4, "Ржомбанье", 6),
+export const pieDataList1 = [
+    new PieData(1, "Программирование", 60),
+    new PieData(2, "Анализ данных", 10),
+    new PieData(3, "Аналитика", 10),
+    new PieData(4, "Математика", 20),
 ]
 
-export const lineChartDataList = [
-    new LineChartData(1, 30, 1),
-    new LineChartData(2, 50, 2),
-    new LineChartData(3, 43, 3),
-    new LineChartData(4, 101, 4),
+export const pieDataList2 = [
+    new PieData(1, "Программирование", 30),
+    new PieData(2, "Физика", 10),
+    new PieData(3, "Анализ данных", 9),
+    new PieData(4, "Математика", 31),
+    new PieData(5, "Защита информации", 20),
+]
+
+export const lineChartDataList1 = [
+    new LineChartData(1, 22, 1),
+    new LineChartData(2, 24, 2),
+    new LineChartData(3, 20, 3),
+    new LineChartData(4, 19, 4),
+]
+
+export const lineChartDataList2 = [
+    new LineChartData(1, 22, 1),
+    new LineChartData(2, 21, 2),
+    new LineChartData(3, 23, 3),
+    new LineChartData(4, 19, 4),
+    new LineChartData(5, 18, 5),
+    new LineChartData(6, 17, 6),
 ]
 
 export const courseComparisonDataList = [
-    new CourseComparisonData(1, "Лядова", "Дацун", 99),
-    new CourseComparisonData(2, "Прога", "Олимпиадная прога", 30),
-    new CourseComparisonData(3, "Рыбалка", "Охота", 40),
-    new CourseComparisonData(4, "Прохождение СОПа", "Написание диплома", 2),
-    new CourseComparisonData(5, "Разработка ПО", "Проектирование архитектуры", 5),
+    new CourseComparisonData(1, "Математические методы анализа данных", "Культура работы с данными", 89),
+    new CourseComparisonData(2, "Алгебра", "Алгебра (углублённый курс)", 80),
+    new CourseComparisonData(3, "Алгоритмы и алгоритмические языки", "Программирование алгоритмов защиты информации", 79),
+    new CourseComparisonData(4, "Компиляторные технологии", "Язык ассемблер", 60),
+    new CourseComparisonData(5, "Право", "Правовой режим персональных данных", 55),
 ]

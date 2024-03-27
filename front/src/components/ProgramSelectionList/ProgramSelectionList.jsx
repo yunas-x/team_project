@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import {ProgramCard} from "../ProgramCard/ProgramCard";
 import {CardModel} from "../ProgramCard/cardModel";
 import {Pagination} from "@mui/material";
-import {useMemo, useRef, useState} from "react";
+import {useState} from "react";
 import {programsSelectionController} from "../../pages/ProgramsPage/ProgramsPage";
 
 const createCard = (programSelectionModel) =>  {
@@ -27,13 +27,14 @@ const ProgramSelectionList = observer(({isLoading, programSelectionService}) => 
         setSelectedPageNumber(pageCount)
     }
 
+    if (programCount === 0) {
+        return <div className={styles.not_found}>Программ не найдено...</div>
+    }
+
     return (
         <div className={styles.content_holder}>
             <div className={styles.top_block}>
-                <span>Найдено программ: {programCount}</span>
-
-                <div className={styles.search_block}>
-                </div>
+                Найдено программ: {programCount}
             </div>
 
             <div className={styles.pagination_top_block}>

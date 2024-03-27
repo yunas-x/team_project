@@ -31,6 +31,10 @@
     word-wrap: anywhere;
 }
 
+.small_card_title {
+    font-size: 20px;
+}
+
 .card_body {
     min-height: 30px;
     flex: 1;

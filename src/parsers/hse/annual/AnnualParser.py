@@ -7,8 +7,6 @@ from parsers.hse.utils import get_data_frame_by_pdf_path
 from parsers.hse.annual.json_converter import convert_to_json
 from parsers.hse.annual.data_classes.header_info import HeaderInfo
 
-import time
-
 
 class AnnualParser(ParserProtocol):
     """Parser for annual HSE curricula"""
@@ -21,11 +19,9 @@ class AnnualParser(ParserProtocol):
         """
         pdf_path = payload
 
-        # ~0.2 seconds
         header_text_list = get_pdf_page_text(pdf_path, 0, True).split("\n")
         header_text_list = [text.strip() for text in header_text_list if text]
         
-        # ~0.3 seconds
         df = get_data_frame_by_pdf_path(pdf_path,
                                         table_settings={"text_x_tolerance": 1, "vertical_strategy": "lines_strict"})
 

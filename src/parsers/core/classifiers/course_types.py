@@ -7,6 +7,7 @@ class CourseType(Enum):
     FACULTATIVE_TYPE = "Ф"
 
 
+# TODO: Combine enum and dict
 course_classifier_dict = {
     CourseType.COMPULSORY_TYPE: "Обязательный",
     CourseType.ELECTIVE_TYPE: "По выбору",

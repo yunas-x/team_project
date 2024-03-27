@@ -62,7 +62,7 @@ def __parse(all_file_names: list[str], pdf_folder_path: str, folder_to_save_json
             logging.info(str((i + 1)) + " of " + str(len(all_file_names)) + " passed: " + str(file_name))
 
         except Exception as e:
-            logging.info(e)
+            logging.exception(e)
 
 
 def validate(folder_with_pdf_files_path: str, folder_to_save_json_files_path: str, json_schema_full_path: str, process_count: int = VALIDATION_PROCESS_COUNT):

@@ -31,7 +31,7 @@ export class ProgramsSelectionController {
 
     setSelected(programsSelectionModel) {
         if (this.selectedList.filter(selectedModel => selectedModel.degreeModel.id !== programsSelectionModel.degreeModel.id
-            && selectedModel.degreeModel.id === getMasterId()).length !== 0) {
+            && (selectedModel.degreeModel.id === getMasterId() || programsSelectionModel.degreeModel.id === getMasterId())).length !== 0) {
             NotificationManager.warning('Можно сравнивать программы только со схожим уровнем образования',
                 'Выбрано "' + this.selectedList[0].degreeModel.displayName + '"',
                 3500)

@@ -5,25 +5,24 @@ import StoreBase from "./base/storeBase";
 import {degrees} from "../helpers/mock";
 
 export default class ProgramSelectionServicesProvider {
-    universityService = new UniversityService();
+    universityService;
     fieldOfStudyService = new FieldOfStudyService();
     programService = new ProgramService();
     degreeStore = new StoreBase();
 
-    loadServices() {
-        this.universityService.loadAllData();
-        this.fieldOfStudyService.loadAllData();
-
-        this._initDegreeStore()
+    constructor() {
+        this.universityService = new UniversityService(this.programService);
     }
 
-    _initDegreeStore() {
-        // const items = [
-        //     new ModelBase(3, "Бакалавриат"),
-        //     new ModelBase(4, "Магистратура"),
-        //     new ModelBase(5, "Специалитет"),
-        // ]
+    loadServices() {
+        this.fieldOfStudyService.loadAllData();
+        this.programService.loadAllData();
+        this.universityService.loadAllData();
 
+        this.#initDegreeStore()
+    }
+
+    #initDegreeStore() {
         this.degreeStore.setNewItems(degrees);
     }
 }

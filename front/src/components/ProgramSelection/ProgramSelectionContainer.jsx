@@ -1,11 +1,9 @@
 import ComboBox from "../ComboBox/ComboBox";
 import ProgramSelectionServicesProvider from "../../store/programSelectionServicesProvider";
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {observer} from "mobx-react-lite";
 import styles from './styles.module.css'
 import ProgramSelectionList from "../ProgramSelectionList/ProgramSelectionList";
-import {ProgramCard} from "../ProgramCard/ProgramCard";
-import {FilterProgram} from "../../store/dto/filterProgram";
 import {ProgramSelectionService} from "../../store/services/programSelectionService";
 
 const servicesProvider = new ProgramSelectionServicesProvider();
@@ -34,11 +32,11 @@ const ProgramSelectionContainer = observer(() => {
 
     useEffect(() => {
         //programService.loadFilteredData(createFilterProgramObject(fieldOfStudyService.store, selectedFieldsOfStudyId, selectedDegreesId));
-        if (selectedUniversityId) {
-            programService.tempLoadByFilter(universityService.store.items.find(university => selectedUniversityId.includes(university.id)), selectedFieldsOfStudyId, selectedDegreesId)
-        } else {
-            programService.tempLoadByFilter(undefined, selectedFieldsOfStudyId, selectedDegreesId)
-        }
+        //if (selectedUniversityId) {
+            //programService.tempLoadByFilter(universityService.store.items.find(university => selectedUniversityId.includes(university.id)), selectedFieldsOfStudyId, selectedDegreesId)
+        //} else {
+            //programService.tempLoadByFilter(undefined, selectedFieldsOfStudyId, selectedDegreesId)
+        //}
 
         programSelectionService.updateSelectedInfo(selectedUniversityId ? selectedUniversityId[0] : undefined,
             selectedFieldsOfStudyId ?? [], selectedDegreesId ?? [])
@@ -112,11 +110,5 @@ const ProgramSelectionContainer = observer(() => {
         </div>
     )
 })
-
-function createFilterProgramObject(fieldsStore, selectedFieldsId, selectedDegreesId) {
-    const fieldGroupsId = selectedFieldsId?.map(fieldId => fieldsStore.items.find(item => item.id === fieldId).fieldGroupCode);
-
-    return new FilterProgram(selectedFieldsId, fieldGroupsId, selectedDegreesId);
-}
 
 export default ProgramSelectionContainer;

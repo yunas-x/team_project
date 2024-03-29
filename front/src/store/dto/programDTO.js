@@ -5,17 +5,12 @@ export class ProgramDTO {
     program_name;
     degree_id;
     degree;
-    field_code;
-    field_name;
-    field_group_code;
-    field_group_name;
-
-    constructor(id, name) {
-        this.id = id;
-        this.name = name;
-    }
+    duration;
+    field; // FieldDTO
+    university; // UniversityDTO
 }
 
 export function mapProgramDTOToModel(dto) {
-    return new ProgramModel(dto.program_id, dto.program_name, dto.field_code);
+    return new ProgramModel(dto.program_id, dto.program_name, dto.university.university_id, dto.field.field_code,
+        dto.degree_id, dto.duration);
 }

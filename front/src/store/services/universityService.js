@@ -1,30 +1,28 @@
 import ServiceBase from "../base/serviceBase";
 import {mapUniversityDTOToModel, UniversityDTO} from "../dto/universityDTO";
-import {universities} from "../../helpers/mock";
+import fetchUniversities from "../../api/fetchUniversities";
 
 export class UniversityService extends ServiceBase {
-    async fetchData(offset, count) {
-        if (offset > 2) {
-            return new Promise(resolve => resolve([]));
-        }
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve([new UniversityDTO(1, "НИУ ВШЭ"), new UniversityDTO(2, "ПНИПУ")])
-            }, 1000)
-        });
+    constructor(programService) {
+        super();
 
-        //return (await fetchUniversities()).map(json => Object.assign(new UniversityDTO(), json));
+        this.programService = programService;
     }
 
-    load() {
-        this.store.setNewItems(universities);
+    async _doLoadToStore() {
+        // this.store.setNewItems(universities); // mock universities, import {universities} from "../../helpers/mock";
+
+        const universitiesRawData = await fetchUniversities();
+        const universityDTOList = universitiesRawData.map(json => Object.assign(new UniversityDTO(), json));
+
+        const allProgramModels = this.programService.store.items;
+
+        const universityModels = universityDTOList.map(dto => mapUniversityDTOToModel(dto, allProgramModels))
+
+        this.store.setNewItems(universityModels);
     }
 
     getUniversityModel(id) {
         return this.store.items.find(university => university.id === id);
-    }
-
-    mapDTOToModel(dto) {
-        return mapUniversityDTOToModel(dto);
     }
 }

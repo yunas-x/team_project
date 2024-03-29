@@ -1,11 +1,8 @@
 import {action, computed, makeObservable, observable} from "mobx";
 import {ProgramSelectionModel} from "../../models/programSelectionModel";
-import {checkAreArraysEqual} from "../../helpers/listHelpers";
 
 export class ProgramSelectionService {
     selectedUniversityModel;
-    selectedFieldOfStudyIdList = [];
-    selectedDegreeIdList = [];
     cachedPrograms = [];
 
     constructor(universityService, fieldOfStudyService, programService, degreeStore) {
@@ -41,23 +38,21 @@ export class ProgramSelectionService {
 
     updateSelectedInfo(universityId, fieldOfStudyIdList, degreeIdList) {
         this.selectedUniversityModel = this.universityService.getUniversityModel(universityId);
-        this.selectedFieldOfStudyIdList = [...fieldOfStudyIdList];
-        this.selectedDegreeIdList = [...degreeIdList];
 
         if (!this.selectedUniversityModel)
         {
             return;
         }
 
-        const programModelIdListOfUniversity = this.programService.store.items.map(program => program.id);
+        const programModelIdListOfUniversity = this.programService.store.items.filter(programModel => programModel.universityId === universityId).map(program => program.id);
         let fullProgramInfoList = this.selectedUniversityModel.allProgramDataList.filter(data => programModelIdListOfUniversity.includes(data.programId))
 
-        if (this.selectedFieldOfStudyIdList.length !== 0) {
-            fullProgramInfoList = fullProgramInfoList.filter(data => this.selectedFieldOfStudyIdList.includes(data.fieldOfStudyId))
+        if (fieldOfStudyIdList.length !== 0) {
+            fullProgramInfoList = fullProgramInfoList.filter(data => fieldOfStudyIdList.includes(data.fieldOfStudyId))
         }
 
-        if (this.selectedDegreeIdList.length !== 0) {
-            fullProgramInfoList = fullProgramInfoList.filter(data => this.selectedDegreeIdList.includes(data.degreeId))
+        if (degreeIdList.length !== 0) {
+            fullProgramInfoList = fullProgramInfoList.filter(data => degreeIdList.includes(data.degreeId))
         }
 
         this.cachedPrograms = fullProgramInfoList;

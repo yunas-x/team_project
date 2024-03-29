@@ -4,12 +4,18 @@ import {ProgramComparisonPage} from "./pages/ProgramComparison/ProgramComparison
 import {ProgramsPage} from "./pages/ProgramsPage/ProgramsPage";
 import NotificationContainer from "react-notifications/lib/NotificationContainer";
 import 'react-notifications/lib/notifications.css';
+import {CircularProgress} from "@mui/material";
 
 export const App = observer(() => {
     return (
         <>
             <NotificationContainer />
-            {comparisonController.isComparisonOpened ? <ProgramComparisonPage/> : <ProgramsPage/>}
+            {comparisonController.isComparisonOpened
+                ? comparisonController.isLoading
+                    ? <div style={{display: "flex", width: "100%", height: "95vh", justifyContent: "center", alignItems: "center"}}>
+                        <CircularProgress /> </div>
+                    : <ProgramComparisonPage/>
+                : <ProgramsPage/>}
         </>
     )
 })

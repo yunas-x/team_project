@@ -17,14 +17,15 @@ export async function fetchData(url, offset = 0, limit = 20) {
     });
 }
 
+export async function fetchDataWithParams(url, params) {
+    return await host.get(url, {
+        params: params,
+    })
+}
+
 /**
  * Performs POST request
  */
-export async function fetchDataWithParams(url, data, offset = 0, limit = 20) {
-    return await host.post(url, data, {
-        params: {
-            offset: offset,
-            limit: limit,
-        }
-    })
+export async function fetchDataWithPOST(url, data) {
+    return await host.post(url, data)
 }

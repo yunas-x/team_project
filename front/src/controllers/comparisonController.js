@@ -8,11 +8,13 @@ import {
     pieDataList, pieDataList1, pieDataList2
 } from "../helpers/mock";
 import {action, makeObservable, observable} from "mobx";
+import {InfographicsService} from "../store/services/infographicsService";
 
 export class ComparisonController {
     isLoading = false;
     isComparisonOpened = false;
     comparisonData = undefined;
+    infographicsService = new InfographicsService();
 
     constructor() {
         makeObservable(this, {
@@ -21,26 +23,35 @@ export class ComparisonController {
             comparisonData: observable,
             showComparison: action,
             closeComparison: action,
+            setIsLoading: action,
         })
     }
 
-
-    showComparison(firstProgramSelectionModel, secondProgramSelectionModel) {
-        this.isLoading = true;
-        // fetch expected
-
+    async showComparison(firstProgramSelectionModel, secondProgramSelectionModel) {
+        this.setIsLoading(true);
         this.isComparisonOpened = true;
 
-        this.comparisonData = new ComparisonData(this.#createProgramComparisonData(firstProgramSelectionModel, pieDataList1, lineChartDataList1),
-            this.#createProgramComparisonData(secondProgramSelectionModel, pieDataList2, lineChartDataList2),
-            courseComparisonDataList)
+        await this.infographicsService.loadAllData({
+            firstProgramId: firstProgramSelectionModel.programModel.id,
+            secondProgramId: secondProgramSelectionModel.programModel.id,
+        });
+
+        this.comparisonData = this.infographicsService.store.items[0];
+
+        // this.comparisonData = new ComparisonData(this.#createProgramComparisonData(firstProgramSelectionModel, pieDataList1, lineChartDataList1),
+        //     this.#createProgramComparisonData(secondProgramSelectionModel, pieDataList2, lineChartDataList2),
+        //     courseComparisonDataList) // mock data
 
 
-        this.isLoading = false;
+        this.setIsLoading(false);
     }
 
     closeComparison() {
         this.isComparisonOpened = false;
+    }
+
+    setIsLoading(value) {
+        this.isLoading = value;
     }
 
     #createProgramComparisonData(programSelectionModel, pieDataList, lineChartDataList) {

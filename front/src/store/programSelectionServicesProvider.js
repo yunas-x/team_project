@@ -15,9 +15,11 @@ export default class ProgramSelectionServicesProvider {
     }
 
     loadServices() {
+        this.universityService.setIsLoading(true);
+
         this.fieldOfStudyService.loadAllData();
-        this.programService.loadAllData();
-        this.universityService.loadAllData();
+        this.programService.loadAllData().then(() =>
+            this.universityService.loadAllData());
 
         this.#initDegreeStore()
     }

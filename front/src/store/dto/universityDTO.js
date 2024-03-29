@@ -14,10 +14,10 @@ export class UniversityDTO {
 }
 
 export function mapUniversityDTOToModel(dto, programModelList) {
-    const universityPrograms = programModelList.filter(programModel => programModel.universityId === dto.id);
+    const universityPrograms = programModelList.filter(programModel => programModel.universityId === dto.university_id);
 
     const allProgramDataList = universityPrograms.map(programModel => new AllProgramData(programModel.id, programModel.fieldId,
         programModel.degreeId, programModel.yearCount))
 
-    return new UniversityModel(dto.id, dto.name, dto.city, allProgramDataList);
+    return new UniversityModel(dto.university_id, dto.university_name, dto.city, allProgramDataList);
 }

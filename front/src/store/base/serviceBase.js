@@ -17,10 +17,10 @@ export default class ServiceBase {
     /**
      * Makes request to obtain the data to store it.
      */
-    async loadAllData() {
+    async loadAllData(getParams = undefined) {
         this._startLoading();
 
-        await this._doLoadToStore();
+        await this._doLoadToStore(getParams);
 
         this.setIsLoading(false);
     }
@@ -30,7 +30,7 @@ export default class ServiceBase {
         this.setIsLoading(true);
     }
 
-    async _doLoadToStore() {
+    async _doLoadToStore(getParams) {
         throw new Error("doLoadToStore must be implemented by inheritors...");
     }
 

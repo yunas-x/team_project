@@ -37,20 +37,22 @@ const SelectedProgramsSummary = observer(() => {
                 )}
             </div>
 
-            {programsSelectionController.selectedList.length === 0
-                ? <div className={styles.help_msg}>Выберите 2 программы для сравнения</div>
-                : programsSelectionController.selectedList.length === 1 ?
-                <div className={styles.help_msg}>
-                    Выберите ещё одну программу
-                </div>
-                    : <></>}
+            <div className={styles.bottom_content}>
+                {programsSelectionController.selectedList.length === 0
+                    ? <div className={styles.help_msg}>Выберите 2 программы</div>
+                    : programsSelectionController.selectedList.length === 1 ?
+                    <div className={styles.help_msg}>
+                        Выберите ещё одну программу
+                    </div>
+                        : <div className={`${styles.help_msg} ${styles.help_msg_placeholder}`}>В</div>}
 
-            <div className={styles.compare_btn_holder}>
-                <button className={programsSelectionController.isReady ? `${styles.compare_btn}` : `${styles.compare_btn} ${styles.btn_disabled}`}
-                        disabled={!programsSelectionController.isReady}
-                onClick={() => onCompareClicked()}>
-                    <span>Сравнить</span>
-                </button>
+                <div className={styles.compare_btn_holder}>
+                    <button className={programsSelectionController.isReady ? `${styles.compare_btn}` : `${styles.compare_btn} ${styles.btn_disabled}`}
+                            disabled={!programsSelectionController.isReady}
+                    onClick={() => onCompareClicked()}>
+                        <span>Сравнить</span>
+                    </button>
+                </div>
             </div>
         </div>
     )

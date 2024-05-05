@@ -3,10 +3,22 @@ from fastapi import (
     Depends,
     HTTPException,
     status,
+    Query,
 )
+
 
 from fastapi.middleware.cors import CORSMiddleware
 
+'''
+for validation
+'''
+from typing import Optional
+from typing_extensions import Annotated
+from pydantic import PositiveInt, StringConstraints
+
+'''
+for work with data models
+'''
 from validators import validate_inforaphics
 from models.University import Universities, University
 from models.Infographics import Infographics, InfographicsProgramIDs
@@ -15,12 +27,14 @@ from models.FieldsOfStudy import FieldsOfStudy
 from models.HTTPAuthError import HTTPAuthError
 from auth.auth import api_key_auth
 
+'''
+DB Queries
+'''
 from orm.queries.FieldsQueries import select_fields
 from orm.queries.ProgramsQueries import select_programs
 from orm.queries.InfographicsQueries import select_infographics
 
 import response_de_jour as rsp
-
 
 app = FastAPI(title="BI Curricula", 
               summary="""API для дипломного проекта""",
@@ -39,6 +53,8 @@ app.add_middleware(
     allow_headers=["*"],
 ) 
 
+fields_alias = Annotated[str, StringConstraints(pattern=r"^[0-5][0-9]\.0[3-5]\.[0-1][1-9]$")]
+
 @app.get("/programs",
          dependencies=[Depends(api_key_auth)],
          summary="Список образовательных программ",
@@ -56,8 +72,10 @@ app.add_middleware(
              }
          }
 )
-def get_programmes() -> Programs:
-    programs_rows = select_programs()
+def get_programmes(offset: Optional[PositiveInt]=None,
+                   limit: Optional[PositiveInt]=None,
+                   fields: Annotated[Optional[list[fields_alias]], Query()] = None) -> Programs:
+    programs_rows = select_programs(offset, limit, fields)
     return Programs.from_rows(programs_rows)
 
 @app.get("/fields",
@@ -100,8 +118,8 @@ def get_fields() -> FieldsOfStudy:
 )
 def get_universities() -> Universities:
     return Universities(universities=[University(
-                                               university_id=1, # Убрать хардкод потом
-                                               university_name="НИУ ВШЭ", # Убрать хардкод потом
+                                               university_id=1,
+                                               university_name="НИУ ВШЭ",
                                                city="Пермь"
                                               )])
 
@@ -139,8 +157,8 @@ def get_infographics(ids: InfographicsProgramIDs=Depends()):
                             detail=validation_result.detail
                            )
     
-    first_program_n_years = programs_info.programs[0].duration # Костыль
-    second_program_n_years = programs_info.programs[1].duration # Костыль
+    first_program_n_years = programs_info.programs[0].duration
+    second_program_n_years = programs_info.programs[1].duration
     
     return Infographics(
                 first_program = programs_info.programs[0],

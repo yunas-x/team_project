@@ -1,0 +1,53 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Start containers
+      run: docker-compose -f "docker-compose.yaml" up -d --build
+      env:
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_CONNECTION_STRING_AUTH: "postgresql+psycopg2://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@host.docker.internal:5434/${{ secrets.POSTGRES_DB }}"
+        POSTGRES_CONNECTION_STRING_FIELDS: "postgresql+psycopg2://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@host.docker.internal:5433/${{ secrets.POSTGRES_DB }}"
+        POSTGRES_CONNECTION_STRING_PROGRAMS: "postgresql+psycopg2://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@host.docker.internal:5432/${{ secrets.POSTGRES_DB }}"
+        FIELDS_URL: http://host.docker.internal:82/fields/
+        PROGRAMS_URL: http://host.docker.internal:82/programs/fields
+        AUTH_URL: http://host.docker.internal:82/auth/session/check
+        API_TOKEN: ${{ secrets.API_TOKEN }}
+        SECRET: ${{ secrets.SECRET }}
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12'
+
+    - name: Install test dependencies
+      run: pip install -r tests/requirements.txt
+        
+    - name: Run tests
+      run: pytest tests/test_api.py
+      env:
+        API_URL: http://localhost:82
+      
+    - name: Docker Hub Sign In
+      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Push Docker images
+      run: |
+          docker tag deploy_app_auth ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_auth
+          docker tag deploy_app_fields ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_fields
+          docker tag deploy_app_programs ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_programs
+          docker push ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_auth
+          docker push ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_fields
+          docker push ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_programs

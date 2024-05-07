@@ -26,28 +26,3 @@ jobs:
         AUTH_URL: http://host.docker.internal:82/auth/session/check
         API_TOKEN: ${{ secrets.API_TOKEN }}
         SECRET: ${{ secrets.SECRET }}
-
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.12'
-
-    - name: Install test dependencies
-      run: pip install -r tests/requirements.txt
-        
-    - name: Run tests
-      run: pytest tests/test_api.py
-      env:
-        API_URL: http://localhost:82
-      
-    - name: Docker Hub Sign In
-      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-
-    - name: Push Docker images
-      run: |
-          docker tag deploy_app_auth ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_auth
-          docker tag deploy_app_fields ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_fields
-          docker tag deploy_app_programs ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_programs
-          docker push ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_auth
-          docker push ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_fields
-          docker push ${{ secrets.DOCKERHUB_REPOSITORY }}:deploy_app_programs

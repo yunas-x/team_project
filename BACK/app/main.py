@@ -120,7 +120,7 @@ def get_universities() -> Universities:
     return Universities(universities=[University(
                                                university_id=1,
                                                university_name="НИУ ВШЭ",
-                                               city="Пермь"
+                                               city="Москва"
                                               )])
 
 @app.get("/infographics",

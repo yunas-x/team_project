@@ -10,6 +10,14 @@ __fos1 = aliased(FieldOfStudy)
 __fos2 = aliased(FieldOfStudy)
 
 def select_fields(session_maker: sessionmaker[Session]=SessionMaker):
+    '''
+    Selects fields of study of those rows 
+    for witch the corresponding program exists 
+    
+    Arguments:
+    
+    session_maker -- a factory for building session with Database
+    '''
 
     with session_maker() as session:
         fields_pre_query = session \

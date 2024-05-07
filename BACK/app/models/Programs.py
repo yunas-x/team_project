@@ -1,6 +1,4 @@
-from typing_extensions import Annotated
-from annotated_types import Ge
-from pydantic import BaseModel
+from pydantic import BaseModel, NonNegativeInt
 
 from .University import University
 from .FieldsOfStudy import FieldOfStudy
@@ -16,7 +14,7 @@ class Program(BaseModel):
     
 class Programs(BaseModel):
     programs: list[Program]
-    count: Annotated[int, Ge(0)]
+    count: NonNegativeInt
     
     @staticmethod
     def from_rows(programs_rows):

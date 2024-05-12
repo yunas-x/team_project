@@ -28,3 +28,9 @@ jobs:
 
     - name: Install test dependencies
       run: pip install -r BACK/simple_tests/requirements.txt
+
+    - name: Run tests
+      run: pytest BACK/simple_tests/Tests.py
+      env:
+        API_URL: http://localhost:82
+        API_TOKEN: ${{ secrets.API_TOKEN }}

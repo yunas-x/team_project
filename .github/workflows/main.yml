@@ -32,5 +32,5 @@ jobs:
     - name: Run tests
       run: pytest simple_tests/test_api.py
       env:
-        API_URL: http://host.docker.internal:82
+        API_URL: http://localhost:82
         API_TOKEN: ${{ secrets.API_TOKEN }}

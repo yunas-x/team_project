@@ -10,7 +10,7 @@ class Program(BaseModel):
     degree: str
     duration: int
     field: FieldOfStudy
-    unverisity: University
+    university: University
     
 class Programs(BaseModel):
     programs: list[Program]
@@ -36,7 +36,7 @@ class Programs(BaseModel):
                                            field_group_code=p.field_group_code,
                                            field_group_name=p.field_group_name
                                           ),
-                        unverisity=University(
+                        university=University(
                                                university_id=1, # Убрать хардкод потом
                                                university_name="НИУ ВШЭ", # Убрать хардкод потом
                                                city="Пермь"

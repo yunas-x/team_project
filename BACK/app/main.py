@@ -14,7 +14,7 @@ for validation
 '''
 from typing import Optional
 from typing_extensions import Annotated
-from pydantic import PositiveInt, StringConstraints
+from pydantic import PositiveInt, NonNegativeInt, StringConstraints
 
 '''
 for work with data models
@@ -72,8 +72,8 @@ fields_alias = Annotated[str, StringConstraints(pattern=r"^[0-5][0-9]\.0[3-5]\.[
              }
          }
 )
-def get_programmes(offset: Optional[PositiveInt]=None,
-                   limit: Optional[PositiveInt]=None,
+def get_programmes(offset: Optional[NonNegativeInt]=None,
+                   limit: Optional[NonNegativeInt]=None,
                    fields: Annotated[Optional[list[fields_alias]], Query()] = None) -> Programs:
     programs_rows = select_programs(offset, limit, fields)
     return Programs.from_rows(programs_rows)

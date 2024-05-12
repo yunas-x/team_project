@@ -3,6 +3,15 @@ from models import Programs
 
 
 def validate_inforaphics(programs_info: Programs) -> ValidationModel:
+    '''
+    Validates Programs info for infogaphics request.
+    Checks if degrees match
+    
+    Arguments:
+    
+    programs_info -- Info of Program to revify
+    '''
+    
     if programs_info.count != 2:
         return ValidationModel(
             status_code=400,

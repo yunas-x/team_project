@@ -1,10 +1,13 @@
 from pydantic import BaseModel, StringConstraints
 from typing_extensions import Annotated
 
+fields_alias = Annotated[str, StringConstraints(pattern=r"^[0-5][0-9]\.0[3-5]\.[0-1][1-9]$")]
+fields_group_alias = Annotated[str, StringConstraints(pattern=r"^[0-5][0-9]\.0{2}\.0{2}$")]
+
 class FieldOfStudy(BaseModel):
-    field_code: Annotated[str, StringConstraints(pattern=r"^[0-5][0-9]\.0[3-5]\.[0-1][1-9]$")]
+    field_code: fields_alias
     field_name: str
-    field_group_code: Annotated[str, StringConstraints(pattern=r"^[0-5][0-9]\.0{2}\.0{2}$")]
+    field_group_code: fields_group_alias
     field_group_name: str
     
     

@@ -5,8 +5,7 @@ from fastapi import (
     status,
     Query,
 )
-
-
+from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 '''
@@ -14,16 +13,17 @@ for validation
 '''
 from typing import Optional
 from typing_extensions import Annotated
-from pydantic import PositiveInt, NonNegativeInt, StringConstraints
+from pydantic import NonNegativeInt
 
 '''
 for work with data models
 '''
 from validators import validate_inforaphics
+from reports import write_report, iterfile
 from models.University import Universities, University
 from models.Infographics import Infographics, InfographicsProgramIDs
 from models.Programs import Programs
-from models.FieldsOfStudy import FieldsOfStudy
+from models.FieldsOfStudy import FieldsOfStudy, fields_alias
 from models.HTTPAuthError import HTTPAuthError
 from auth.auth import api_key_auth
 
@@ -44,16 +44,13 @@ app = FastAPI(title="BI Curricula",
               version="0.1.3"
       )
 
-origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 ) 
-
-fields_alias = Annotated[str, StringConstraints(pattern=r"^[0-5][0-9]\.0[3-5]\.[0-1][1-9]$")]
 
 @app.get("/programs",
          dependencies=[Depends(api_key_auth)],
@@ -117,11 +114,33 @@ def get_fields() -> FieldsOfStudy:
          }
 )
 def get_universities() -> Universities:
-    return Universities(universities=[University(
-                                               university_id=1,
-                                               university_name="НИУ ВШЭ",
-                                               city="Москва"
-                                              )])
+    return Universities(universities=[
+                                        University(
+                                            university_id=1,
+                                            university_name="НИУ ВШЭ",
+                                            city="Москва"
+                                        ),
+				                        University(
+                                            university_id=2,
+                                            university_name="ИТМО",
+                                            city="Санкт-Петербург"
+					                    )
+                                     ]
+                       )
+    
+@app.get("/report/{program_id}",
+         summary="Скачать данные о программе в табличном виде",
+         description="""Выборка данных по образовательной программе""",
+         status_code=status.HTTP_200_OK,
+         tags=["programs"],)
+def get_report(program_id: NonNegativeInt) -> StreamingResponse:
+
+    file = write_report(program_id)
+    return StreamingResponse(
+                             iterfile(file),
+                             media_type="application/csv",
+                             headers={'Content-Disposition': 'attachment; filename=report.csv'}
+                            )
 
 @app.get("/infographics",
          dependencies=[Depends(api_key_auth)],
@@ -161,10 +180,11 @@ def get_infographics(ids: InfographicsProgramIDs=Depends()):
     second_program_n_years = programs_info.programs[1].duration
     
     return Infographics(
-                first_program = programs_info.programs[0],
-                second_program = programs_info.programs[1],
-                similar_courses = rsp.similar_courses,
-                first_program_popular_competences = rsp.first_program_popular_competences,
-                second_program_popular_competences = rsp.second_program_popular_competences,
-                first_program_lesson_hours_a_week = rsp.first_program_lesson_hours_a_week[0:first_program_n_years],
-                second_program_lesson_hours_a_week = rsp.second_program_lesson_hours_a_week[0:second_program_n_years])
+                        first_program = programs_info.programs[0],
+                        second_program = programs_info.programs[1],
+                        similar_courses = rsp.similar_courses,
+                        first_program_popular_competences = rsp.first_program_popular_competences,
+                        second_program_popular_competences = rsp.second_program_popular_competences,
+                        first_program_lesson_hours_a_week = rsp.first_program_lesson_hours_a_week[0:first_program_n_years],
+                        second_program_lesson_hours_a_week = rsp.second_program_lesson_hours_a_week[0:second_program_n_years]
+                       )
